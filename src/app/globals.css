@@ -31,3 +31,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.menuHover {
+  color: black !important;
+  transition: color 0.3s ease;
+}
+
+.menuHover:hover {
+  color: #ccaf71;
+}
