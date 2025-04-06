@@ -53,7 +53,7 @@ export default function Orders() {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/orders/all", {
+      const response = await fetch("https://rosegoldgallery-back.onrender.com/api/orders/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export default function Orders() {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
+      const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${id}`, {
         method: "DELETE",
         headers: { 
           "Authorization": `Bearer ${token}`,

@@ -45,7 +45,7 @@ const StyledButton = styled(Button)({
   },
 });
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',

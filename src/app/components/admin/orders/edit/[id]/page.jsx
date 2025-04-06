@@ -95,7 +95,7 @@ export default function EditOrder({ params }) {
       }
 
       console.log('Fetching order with ID:', params.id);
-      const response = await fetch(`http://localhost:5000/api/orders/${params.id}`, {
+      const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${params.id}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -137,7 +137,7 @@ export default function EditOrder({ params }) {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/orders/${params.id}`, {
+      const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${params.id}`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -405,7 +405,7 @@ export default function EditOrder({ params }) {
                                       </TableCell>
                                       <TableCell>
                                         <img 
-                                          src={`http://localhost:5000/${item.img}`} 
+                                          src={`https://rosegoldgallery-back.onrender.com/${item.img}`} 
                                           alt={item.name}
                                           style={{ width: '50px', height: '50px', objectFit: 'cover' }}
                                         />

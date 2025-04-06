@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 import CustomizedBreadcrumbs from './../bradcrumbs'
 async function getData() {
 
-  const res = await fetch('http://localhost:5000/api/category/necklace');
+  const res = await fetch('https://rosegoldgallery-back.onrender.com/api/category/necklace');
 
   if (!res.ok) {
       throw new Error('Failed to fetch data: ' + res.statusText);
@@ -55,8 +55,7 @@ const NecklacePage = () => {
     }
   }, []);
 
-  if (loading) return <p>Loading...</p>; 
-  if (error) return <p>Error: {error}</p>; // Display error message
+  
 
   return (
     <div>
@@ -68,13 +67,22 @@ const NecklacePage = () => {
       <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
        <CustomizedBreadcrumbs/>
       </Box>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: windowWidth < 600 ? '75%' : windowWidth < 1024 ? '90%' : '75%', margin: '5% auto' }}>
-        {data.length > 0 ? (
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: windowWidth < 600 ? '75%' : windowWidth < 1024 ? '90%' : '75%',
+        margin: '5% auto'
+      }}>
+        {loading ? (
+          <p>Loading products...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : data.length > 0 ? (
           data.map(item => (
-            <div key={item.id} style={{ 
-              flex: windowWidth < 600 ? '1 0 100%' : windowWidth < 1024 ? '1 0 50%' : '1 0 33.33%', // Adjust flex based on screen size
-              marginBottom:'5%',
-              
+            <div key={item.id} style={{
+              flex: windowWidth < 600 ? '1 0 100%' : windowWidth < 1024 ? '1 0 50%' : '1 0 33.33%',
+              marginBottom: '5%',
             }}>
               <MultiActionAreaCard data={item} />
             </div>

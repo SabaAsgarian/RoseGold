@@ -76,7 +76,7 @@ export default function CheckOrder() {
 
       console.log('Prepared order data:', orderData);
 
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch('https://rosegoldgallery-back.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export default function CheckOrder() {
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <img 
-                          src={`http://localhost:5000/${item.img}`}
+                          src={`https://rosegoldgallery-back.onrender.com/${item.img}`}
                           alt={item.name}
                           style={{ width: 50, height: 50, objectFit: 'cover' }}
                         />

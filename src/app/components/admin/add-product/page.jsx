@@ -70,7 +70,7 @@ export default function AddProduct() {
     
         try {
             console.log("Sending Data:", Object.fromEntries(formData));
-            const res = await fetch("http://localhost:5000/api/products", {
+            const res = await fetch("https://rosegoldgallery-back.onrender.com/api/products", {
                 method: "POST",
                 body: formData,
             });

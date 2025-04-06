@@ -18,7 +18,7 @@ export default function ManageProducts() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/products")
+        fetch("https://rosegoldgallery-back.onrender.com/api/products")
             .then((res) => res.json())
             .then((data) => setProducts(data))
             .catch((err) => console.error("Error In Fetching Products:", err));
@@ -36,7 +36,7 @@ export default function ManageProducts() {
             <ul style={{backgroundColor:'red',color:'black'}}>
                 {products.map((product) => (
                     <li key={product._id} style={{backgroundColor:'red',color:'black'}}>
-                        <img src={`http://localhost:5000/${product.img}`} width="50" height="50" alt={product.title} />
+                        <img src={`https://rosegoldgallery-back.onrender.com/${product.img}`} width="50" height="50" alt={product.title} />
                         {product.title} - {product.price}$
                         <button><EditNoteIcon/> Edit</button>
                         <button><DeleteOutlineIcon/> Delete</button>

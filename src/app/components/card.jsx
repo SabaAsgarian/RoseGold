@@ -30,7 +30,7 @@ export default function MultiActionAreaCard({ data }) { // Accept data as a prop
                         <CardMedia
                             component="img"
                             height="220"
-                            image={`http://localhost:5000/${data.img}`}
+                            image={`https://rosegoldgallery-back.onrender.com/${data.img}`}
                             alt={data.category}
                         />
                     </div>

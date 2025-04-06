@@ -132,7 +132,7 @@ export default function page() {
       return;
     }
   
-    const url = 'http://localhost:5000/api/user';
+    const url = 'https://rosegoldgallery-back.onrender.com/api/user';
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -275,7 +275,7 @@ function CollapsibleTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/api/user');
+      const response = await fetch('https://rosegoldgallery-back.onrender.com/api/user');
       const result = await response.json();
       setData(result);
     };
@@ -357,7 +357,7 @@ function Row({ val }) {
     }
   
     const updatedData = { ...newData }; // Assuming newData contains the updated values
-    fetch(`http://localhost:5000/api/user/${val.id}`, {
+    fetch(`https://rosegoldgallery-back.onrender.com/api/user/${val.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedData),
@@ -500,7 +500,7 @@ function Row({ val }) {
   );
 }
 function loadPage() {
-    fetch('http://localhost:5000/api/user')  // Ensure this API is available
+    fetch('https://rosegoldgallery-back.onrender.com/api/user')  // Ensure this API is available
       .then(res => {
         if (!res.ok) {
           throw new Error('Failed to load data');
@@ -523,7 +523,7 @@ function loadPage() {
     }
   
     if (window.confirm('Are you sure you want to delete it?')) {
-      fetch(`http://localhost:5000/api/user/${itemId}`, {
+      fetch(`https://rosegoldgallery-back.onrender.com/api/user/${itemId}`, {
         method: 'DELETE',
       })
         .then(res => {

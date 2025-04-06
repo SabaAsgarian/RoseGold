@@ -9,7 +9,7 @@ export default function OrdersList() {
     const fetchUserOrders = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/orders/user');
+        const response = await fetch('https://rosegoldgallery-back.onrender.com/api/orders/user');
         const data = await response.json();
         setOrders(data);
       } catch (error) {

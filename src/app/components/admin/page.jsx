@@ -17,7 +17,7 @@ const Dashboard = () => {
   //         return;
   //       }
 
-  //       const res = await axios.get("http://localhost:5000/api/admin", {
+  //       const res = await axios.get("https://rosegoldgallery-back.onrender.com/api/admin", {
   //         headers: { Authorization: `Bearer ${token}` },
   //       });
 

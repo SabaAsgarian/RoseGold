@@ -29,7 +29,7 @@ export default function EditOrder() {
   const fetchOrder = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
+      const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -50,7 +50,7 @@ export default function EditOrder() {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
+      const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

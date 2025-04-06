@@ -128,7 +128,7 @@ export default function CartPage() {
               <TableRow key={val.id}>
                 <TableCell>
                   <img
-                    src={`http://localhost:5000/${val.img}`}
+                    src={`https://rosegoldgallery-back.onrender.com/${val.img}`}
                     alt={val.title}
                     style={{
                       width: "50px",

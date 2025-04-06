@@ -44,7 +44,7 @@ const StyledButton = styled(Button)({
   },
 });
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -236,7 +236,7 @@ export default function AdminLogin() {
 //   },
 // });
 
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
 
 // export default function AdminLogin() {
 //   const router = useRouter();
