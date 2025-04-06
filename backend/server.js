@@ -22,7 +22,10 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use("/uploads", express.static("uploads"));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: [
+    'https://rosegoldgalleryy.vercel.app',
+    'http://localhost:3000' // for local development
+  ],
   credentials: true
 }));
 
