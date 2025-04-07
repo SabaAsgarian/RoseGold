@@ -156,10 +156,12 @@ function ResponsiveDrawer(props) {
   };
    // ✅ **تابع خروج از حساب**
    const handleLogout = () => {
+    localStorage.clear();
     localStorage.removeItem("adminToken");
     localStorage.removeItem("userRole");
     router.push("/components/admin/login");
 };
+
   const menuItems = [
     { text: 'Managing Products', path: '/components/admin/products', icon: <Inventory2OutlinedIcon /> },
     { text: 'Managing Users', path: '/components/admin/users', icon: <PortraitIcon /> },

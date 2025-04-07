@@ -20,6 +20,7 @@
     "@mui/x-charts": "^7.15.0",
     "axios": "^1.8.3",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "formik": "^2.4.6",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.7",

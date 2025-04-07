@@ -44,37 +44,37 @@ export default function App() {
         className="mySwiper"
       >
         <SwiperSlide>
-            <Image src={a} alt='img' />
+            <Image src={a} alt='img' className='image-hover2' />
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={b} alt='img' />
+             <Image src={b} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={c} alt='img' />
+             <Image src={c} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={d} alt='img' />
+             <Image src={d} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={e} alt='img' />
+             <Image src={e} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={f} alt='img' />
+             <Image src={f} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={b} alt='img' />
+             <Image src={b} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={c} alt='img' />
+             <Image src={c} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={d} alt='img' />
+             <Image src={d} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={e} alt='img' />
+             <Image src={e} alt='img' className='image-hover2'/>
         </SwiperSlide>
         <SwiperSlide>
-             <Image src={f} alt='img' />
+             <Image src={f} alt='img' className='image-hover2'/>
         </SwiperSlide>
       </Swiper>
     </>

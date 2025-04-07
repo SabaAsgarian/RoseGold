@@ -11,6 +11,10 @@
     filter: brightness(70%); /* Decrease brightness on hover */
     
 }
+  .image-hover2:hover {
+    filter: brightness(25%); /* Decrease brightness on hover */
+    
+}
 .p-hover:hover {
   border-bottom: 1px solid black;
   color: rgb(74, 74, 74);
