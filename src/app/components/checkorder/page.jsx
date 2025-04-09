@@ -48,34 +48,27 @@ export default function CheckOrder() {
 
   const handleConfirmOrder = async () => {
     try {
-      console.log('Starting order confirmation...');
-      
       const token = localStorage.getItem('token');
-      console.log('Token available:', !!token);
-      
       if (!token) {
-        console.log('No token found, redirecting to login...');
         router.push('/components/account/userlogin');
         return;
       }
-
+  
       const orderData = {
         items: cartItems.map(item => ({
-          id: item.id,
+          productId: item.id,
           name: item.name,
           quantity: item.quantity,
           price: item.price,
           img: item.img
         })),
-        totalAmount,
+        totalAmount: totalAmount,
         shippingAddress: {
           city: user.city,
           street: user.street
         }
       };
-
-      console.log('Prepared order data:', orderData);
-
+  
       const response = await fetch('https://rosegoldgallery-back.onrender.com/api/orders', {
         method: 'POST',
         headers: {
@@ -84,32 +77,39 @@ export default function CheckOrder() {
         },
         body: JSON.stringify(orderData)
       });
-
-      console.log('API Response status:', response.status);
+  
       const data = await response.json();
-      console.log('Server response data:', data);
-
+  
       if (response.ok) {
-        const orderToSave = {
+        // Generate tracking code
+        const trackingCode = Math.random().toString(36).substring(2, 15).toUpperCase();
+        
+        // Store the order data with tracking code
+        const orderToStore = {
           ...data.order,
-          totalAmount: totalAmount
+          totalAmount: totalAmount,
+          trackingCode: trackingCode
         };
-        console.log('Saving order to localStorage:', orderToSave);
-        localStorage.setItem('lastOrder', JSON.stringify(orderToSave));
+        
+        console.log('Storing order data:', orderToStore);
+        localStorage.setItem('lastOrder', JSON.stringify(orderToStore));
+        console.log('Stored in localStorage:', localStorage.getItem('lastOrder'));
         localStorage.removeItem('cart');
         
-        console.log('Order saved successfully, redirecting to payment...');
-        // Use router.push instead of window.location.href for better navigation
-        router.push('/components/payment');
+        // Use a small delay to ensure localStorage is updated
+        setTimeout(() => {
+          window.location.href = '/components/payment';
+        }, 100);
       } else {
-        console.error('Server returned error:', data);
-        throw new Error(data.error || 'خطا در ثبت سفارش');
+        throw new Error(data.error || 'Error placing order');
       }
     } catch (error) {
-      console.error('Detailed error in handleConfirmOrder:', error);
-      alert(error.message || 'خطا در ثبت سفارش. لطفا دوباره تلاش کنید.');
+      console.error('Error during order confirmation:', error);
+      alert(error.message || 'Error placing order. Please try again.');
     }
   };
+  
+  
 
   if (loading) {
     return (

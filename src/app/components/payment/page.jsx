@@ -24,29 +24,29 @@ export default function Payment() {
     }
   
     try {
-      setOrder(JSON.parse(orderData));
+      const parsedOrder = JSON.parse(orderData);
+      if (!parsedOrder || !parsedOrder.totalAmount) {
+        throw new Error('Invalid order data');
+      }
+      setOrder(parsedOrder);
+      setLoading(false);
     } catch (error) {
-      console.error('Error parsing JSON:', error);
+      console.error('Error parsing order data:', error);
       localStorage.removeItem('lastOrder');
       router.push('/components/basket');
     }
-  
-    setLoading(false);
-  }, [router])
+  }, [router]);
 
   const handlePayment = async () => {
     try {
-      console.log("در حال پردازش پرداخت...");
-  
-      // شبیه‌سازی پرداخت موفق
+      // Simulate payment processing
       const paymentSuccessful = true;
   
       if (paymentSuccessful) {
-        console.log("پرداخت موفق بود، انتقال به صفحه تشکر...");
-        localStorage.removeItem('lastOrder'); // Clear the order data after successful payment
-        router.push('/components/thankyou');
+        // Keep the order data for the thank you page
+        window.location.href = '/components/thankyou';
       } else {
-        console.log("پرداخت ناموفق بود");
+        alert('Payment failed. Please try again.');
       }
     } catch (error) {
       console.error('Payment error:', error);

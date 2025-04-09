@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Drawerr from '../adminUI/Drawer'
 import { Box, Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import MultiActionAreaCard from '../../card';
 const StyledButton = styled(Button)({
     backgroundColor: '#a9dfd8',
     color: 'black',
@@ -16,7 +17,7 @@ const StyledButton = styled(Button)({
 });
 export default function ManageProducts() {
     const [products, setProducts] = useState([]);
-
+    const [loading, setLoading] = useState(true); 
     useEffect(() => {
         fetch("https://rosegoldgallery-back.onrender.com/api/products")
             .then((res) => res.json())
@@ -33,16 +34,30 @@ export default function ManageProducts() {
            <a href="/components/admin/add-product"><AddCircleOutlineIcon/>Add New Product  </a>
            </StyledButton>
            </Box>
-            <ul style={{backgroundColor:'red',color:'black'}}>
-                {products.map((product) => (
-                    <li key={product._id} style={{backgroundColor:'red',color:'black'}}>
-                        <img src={`https://rosegoldgallery-back.onrender.com/${product.img}`} width="50" height="50" alt={product.title} />
-                        {product.title} - {product.price}$
-                        <button><EditNoteIcon/> Edit</button>
-                        <button><DeleteOutlineIcon/> Delete</button>
-                    </li>
-                ))}
-            </ul>
+           <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+  
+        margin: '5% auto'
+      }}>
+        {loading ? (
+          <p>Loading products...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : data.length > 0 ? (
+          data.map(item => (
+            <div key={item.id} style={{
+             
+              marginBottom: '5%',
+            }}>
+              <MultiActionAreaCard data={item} />
+            </div>
+          ))
+        ) : (
+          <p>No data available</p>
+        )}
+      </div>
           
            </Drawerr>
         </div>

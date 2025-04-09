@@ -94,7 +94,7 @@ export default function Orders() {
 
       const response = await fetch(`https://rosegoldgallery-back.onrender.com/api/orders/${id}`, {
         method: "DELETE",
-        headers: { 
+        headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         },
@@ -117,7 +117,7 @@ export default function Orders() {
     }
   };
 
-  
+
 
   return (
     <div>
@@ -125,7 +125,7 @@ export default function Orders() {
         <Container maxWidth="lg" sx={{ py: 4 }}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>
-              Managing Orders 
+              Managing Orders
             </Typography>
 
             <TableContainer>
@@ -152,19 +152,21 @@ export default function Orders() {
                       <TableCell>
                         {order.items.map((item) => (
                           <div key={item.id}>
-                            {item.name} (x{item.quantity})
+                            {item.name || 'Unknown Product'} (x{item.quantity})
                           </div>
                         ))}
                       </TableCell>
+
                       <TableCell>${order.totalAmount}</TableCell>
                       <TableCell>
-                        {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.street}` : "ندارد"}
+                        {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.street}` : "Address not available"}
                       </TableCell>
+
                       <TableCell>{order.status}</TableCell>
                       <TableCell>{new Date(order.createdAt).toLocaleString()}</TableCell>
                       <TableCell>
                         <IconButton color="primary" onClick={() => router.push(`/components/admin/orders/edit/${order._id}`)}>
-                          <Edit sx={{color:'black'}}/>
+                          <Edit sx={{ color: 'black' }} />
                         </IconButton>
                         <IconButton color="error" onClick={() => handleDelete(order._id)}>
                           <Delete />

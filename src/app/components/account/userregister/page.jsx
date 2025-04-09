@@ -351,6 +351,12 @@ export default function UserRegister() {
               </Link>
             </Box>
           </StyledForm>
+          <Box sx={{width:'100%',marginTop:'10%',marginBottom:'10%'}}>
+         <Link href="/">
+              <StyledButton sx={{width:'100%'}}>Main Site</StyledButton>
+            </Link>
+         </Box>
+      
         </Box>
       </Container>
     </Container>
