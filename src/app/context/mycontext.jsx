@@ -21,6 +21,7 @@ export const UserProvider = ({ children }) => {
       setUser({
         ...data, // تمام داده‌ها را گرفته و بررسی کنید که مقادیر موجود در اینجا درسته
         mobile: data.mobile , // جلوگیری از undefined
+        id:data.id,
         city: data.city , 
         street: data.street , 
         age: data.age ,

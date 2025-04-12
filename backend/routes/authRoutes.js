@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { email, mobile, pass } = req.body;
-        const identifier = email || mobile; // Use email if provided, otherwise mobile
+        const identifier = email || mobile;
         
         const user = await User.findOne({
           $or: [{ email: identifier }, { mobile: identifier }]
@@ -45,20 +45,20 @@ router.post("/login", async (req, res) => {
           return res.status(401).json({ error: "Invalid credentials" });
         }
         
-        // // Proceed if the user is authenticated
-        // res.status(200).json({ message: "Authentication successful!" });
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.json({
           token,
           user: {
+            _id: user._id,
+            id: user._id,
             fname: user.fname,
             lname: user.lname,
             email: user.email,
             mobile: user.mobile,
             role: user.role,
-            age: user.age,     // <-- Make sure these fields are here
-            city: user.city,   // <-- Make sure these fields are here
-            street: user.street, // <-- Make sure these fields are here
+            age: user.age,
+            city: user.city,
+            street: user.street,
           },
         });
     } catch (error) {
@@ -118,6 +118,7 @@ router.get("/user/:id", async (req, res) => {
 
     // Return the full user details
     res.json({
+      id: user._id,
       fname: user.fname,
       lname: user.lname,
       email: user.email,
@@ -145,29 +146,116 @@ router.get("/user", async (req, res) => {
 });
 // **📌 حذف کاربر**
 // Delete user by ID
-router.delete('/:id', (req, res) => {
+router.delete('/user/:id', async (req, res) => {
   const { id } = req.params;
-  if (!id) {
-    return res.status(400).json({ error: 'Invalid ID' });
+  try {
+      const deletedUser = await User.findByIdAndDelete(id);
+      if (!deletedUser) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+      res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to delete user', details: error.message });
   }
+});
+router.put('/user/:id', async (req, res) => {
+  const { id } = req.params;
 
-  User.findByIdAndDelete(id)
-    .then(() => res.status(200).json({ message: 'User deleted successfully' }))
-    .catch((error) => res.status(500).json({ error: 'Failed to delete user', error }));
+  try {
+      const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+          new: true, // Return the updated document
+          runValidators: true, // Ensure validation rules are applied
+      });
+
+      if (!updatedUser) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      res.status(200).json(updatedUser);
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to update user', details: error.message });
+  }
 });
 
+// **📌 ویرایش کاربر**
+// // Update user by ID
+// router.put('/:id', async (req, res) => {
+//   const { id } = req.params;
+//   const { fname, lname, email, mobile, role, age, city, street } =
+//   req.body;
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(id, {
+//       fname,
+//       lname,
+
+router.put('/user/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log('ID received:', id); // Debugging log
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true, 
+      runValidators: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Update error:', error.message);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
+});
+////
+// router.get("/user", async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     console.log("Fetched users:", users); // Debug log
+//     res.json(users);
+//   } catch (error) {
+//     console.error("Error fetching users:", error);
+//     res.status(500).json({ error: "Failed to fetch users" });
+//   }
+// });
+
+
+
+
+
 // POST Request to create new user
 // POST Request to create new user
+// router.post('/user', async (req, res) => {
+//   try {
+//     const userData = req.body;
+//     // Validate and process user data here
+//     const newUser = new User(userData);
+//     await newUser.save();
+//     res.status(201).json({ message: 'User added successfully!' });
+//   } catch (error) {
+//     console.error('Error creating user:', error);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// });
 router.post('/user', async (req, res) => {
   try {
+    const existingUser = await User.findOne({
+      $or: [{ email: req.body.email }, { mobile: req.body.mobile }],
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email or Mobile already exists!' });
+    }
+
     const userData = req.body;
-    // Validate and process user data here
     const newUser = new User(userData);
     await newUser.save();
     res.status(201).json({ message: 'User added successfully!' });
   } catch (error) {
-    console.error('Error creating user:', error);
+    console.error('Error creating user:', error.message);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 export default router;

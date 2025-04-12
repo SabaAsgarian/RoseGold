@@ -6,11 +6,10 @@ import { TextField, Button, Box, Container, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Link from "next/link";
-import { useUser } from "../../../context/mycontext"; // اضافه کردن کانتکست
+import { useUser } from "../../../context/mycontext";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
 
-// استایل‌ها...
 const StyledForm = styled("form")({
   display: "flex",
   flexDirection: "column",
@@ -47,12 +46,13 @@ const StyledButton = styled(Button)({
   },
 });
 
-export default function UserLogin() {
+export default function UserLogin({}) {
   const router = useRouter();
-  const { loginUser } = useUser(); // دریافت تابع `loginUser` از context
+  const { loginUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
+      id:'',
       email: "",
       pass: "",
     },
@@ -80,20 +80,46 @@ export default function UserLogin() {
         });
 
         const data = await response.json();
-        console.log("Full server response:", data); // برای دیباگ
+        console.log("Server response data:", data);
+        console.log("User data:", data.user);
 
         if (response.ok) {
-          // ذخیره کامل اطلاعات کاربر
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          console.log("Saved complete user data:", data.user); // برای دیباگ
-          router.push("/components/account");
+          const userId = data.user._id || data.user.id;
+          console.log("Found user ID:", userId);
+
+          if (!userId) {
+            const token = data.token;
+            const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+            console.log("Token payload:", tokenPayload);
+
+            const userData = {
+              ...data.user,
+              _id: tokenPayload.id,
+              id: tokenPayload.id
+            };
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(userData));
+            console.log("Saved user data with ID from token:", userData);
+            router.push("/components/account");
+          } else {
+            const userData = {
+              ...data.user,
+              _id: userId,
+              id: userId
+            };
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(userData));
+            console.log("Saved user data with ID from response:", userData);
+            router.push("/components/account");
+          }
         } else {
           formik.setErrors({ submit: data.error });
         }
       } catch (error) {
         console.error("Login error:", error);
-        formik.setErrors({ submit: "خطا در ورود به سیستم" });
+        formik.setErrors({ submit: "Login error: " + error.message });
       }
     },
   });
@@ -104,7 +130,6 @@ export default function UserLogin() {
       sx={{
         backgroundColor: "#f2f4f8",
         minHeight: "100vh",
-        maxHeight:'auto',
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -115,7 +140,6 @@ export default function UserLogin() {
         sx={{
           backgroundColor: "#ffffff",
           minHeight: "70vh",
-          maxHeight:'auto',
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -131,63 +155,59 @@ export default function UserLogin() {
             alignItems: "center",
           }}
         >
-        <StyledForm onSubmit={formik.handleSubmit}>
-          <h1>Login</h1>
-          
-          <label htmlFor="email">Email</label>
-          <WhiteTextField
-            id="email"
-            name="email"
-            type="email"
-            label="Email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
+          <StyledForm onSubmit={formik.handleSubmit}>
+            <h1>Login</h1>
 
-          <label htmlFor="pass">Password</label>
-          <WhiteTextField
-            id="pass"
-            name="pass"
-            type="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.pass}
-            error={formik.touched.pass && Boolean(formik.errors.pass)}
-            helperText={formik.touched.pass && formik.errors.pass}
-          />
+            <label htmlFor="email">Email</label>
+            <WhiteTextField
+              id="email"
+              name="email"
+              type="email"
+              label="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
 
-          {(formik.touched.email && formik.errors.email) || 
-           (formik.touched.pass && formik.errors.pass) ? (
-            <p className="text-sm text-red-500">
-              <ErrorOutlineIcon className="text-lg text-red-500" />
-              {formik.errors.email || formik.errors.pass}
-            </p>
-          ) : null}
+            <label htmlFor="pass">Password</label>
+            <WhiteTextField
+              id="pass"
+              name="pass"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.pass}
+              error={formik.touched.pass && Boolean(formik.errors.pass)}
+              helperText={formik.touched.pass && formik.errors.pass}
+            />
 
-          <StyledButton type="submit">
-            Sign in
-          </StyledButton>
+            {(formik.touched.email && formik.errors.email) ||
+            (formik.touched.pass && formik.errors.pass) ? (
+              <p className="text-sm text-red-500">
+                <ErrorOutlineIcon className="text-lg text-red-500" />
+                {formik.errors.email || formik.errors.pass}
+              </p>
+            ) : null}
 
-          <Box>
-            <Typography>
-              Don't Have Account?
-            </Typography>
-            <Link href="/components/account/userregister">
-              <StyledButton>Register</StyledButton>
+            <StyledButton type="submit">Sign in</StyledButton>
+
+            <Box>
+              <Typography>Don't Have Account?</Typography>
+              <Link href="/components/account/userregister">
+                <StyledButton>Register</StyledButton>
+              </Link>
+            </Box>
+          </StyledForm>
+
+          <Box sx={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}>
+            <Link href="/">
+              <StyledButton sx={{ width: "100%" }}>Main Site</StyledButton>
             </Link>
           </Box>
-        </StyledForm>
-        <Box sx={{width:'100%',marginTop:'10%',marginBottom:'10%'}}>
-         <Link href="/">
-              <StyledButton sx={{width:'100%'}}>Main Site</StyledButton>
-            </Link>
-         </Box>
         </Box>
- 
-    </Container>
+      </Container>
     </Container>
   );
 }

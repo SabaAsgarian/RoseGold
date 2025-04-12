@@ -102,6 +102,11 @@ function createData(name, calories, fat, carbs, protein, street) {
 
 export default function page() {
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    loadPage(setData); // Pass setData to loadPage
+  }, []);
   const [formData, setFormData] = useState({
     img: '',
     fname: '',
@@ -114,8 +119,8 @@ export default function page() {
     city: '',
     email: '',
     mobile: '',
-    
-    
+
+
   });
 
   const handleInputChange = (e) => {
@@ -125,13 +130,13 @@ export default function page() {
 
   const handleSubmit = () => {
     const { img, fname, lname, street, role, user, age, pass, city, email, mobile } = formData;
-  
+
     // Check if all fields are filled
     if (!img || !fname || !lname || !street || !role || !user || !age || !pass || !city || !email || !mobile) {
       alert('Please fill all the fields');
       return;
     }
-  
+
     const url = 'https://rosegoldgallery-back.onrender.com/api/user';
     fetch(url, {
       method: 'POST',
@@ -151,7 +156,7 @@ export default function page() {
         alert('New user not added: ' + error.message);
       });
   };
-  
+
 
   return (
     <ResponsiveDrawer>
@@ -163,19 +168,19 @@ export default function page() {
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center', mt: 5, fontWeight: 'bolder' }}>
         ADD New Users
-        <ControlPointIcon 
-          sx={{ cursor: 'pointer', fontSize: '50px',color:'black' }} 
+        <ControlPointIcon
+          sx={{ cursor: 'pointer', fontSize: '50px', color: 'black' }}
           onClick={() => setOpen(!open)} // Toggle accordion
         />
       </Box>
       <Accordion expanded={open}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:'black'}} />}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'black' }} />}>
           <h2>Add Users Details</h2>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ '& > :not(style)': { m: 1 } }}>
             <FormControl variant="standard">
-              
+
               <WhiteTextField
                 id="img"
                 name="img"
@@ -211,8 +216,8 @@ export default function page() {
               onChange={handleInputChange}
             />
             <WhiteTextField
-              id="status"
-              name="status"
+              id="role"
+              name="role" // Update this to match the 'role' property in formData
               label="Status"
               value={formData.role}
               onChange={handleInputChange}
@@ -303,8 +308,8 @@ function CollapsibleTable() {
               <TableCell>Email</TableCell>
               <TableCell>Address</TableCell>
               <TableCell>phone</TableCell>
-              {/* <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell> */}
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
 
             </TableRow>
           </TableHead>
@@ -341,44 +346,44 @@ function Row({ val }) {
   const [newData, setNewData] = useState({ ...val }); // Initialize with current data
 
   const handleDelete = () => {
-    console.log("Deleting user with ID:", val.id); // Check if the ID is valid
-    myDel(val.id); // Call the delete function with the user ID
+    if (!val._id) {
+      alert('Invalid User ID');
+      return;
+    }
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      myDel(val._id); // Call your reusable myDel function here
+    }
   };
-  
+
+
+
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    if (!val || !val.id) {
-      alert('No user selected to update!');
+    if (!val._id) {
+      alert('Invalid User ID');
       return;
     }
-  
-    const updatedData = { ...newData }; // Assuming newData contains the updated values
-    fetch(`https://rosegoldgallery-back.onrender.com/api/user/${val.id}`, {
+
+    fetch(`https://rosegoldgallery-back.onrender.com/api/user/${val._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(newData),
     })
       .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
+        if (!res.ok) throw new Error('Update failed');
+        alert('User updated successfully!');
+        setIsEditing(false);
+        loadPage(); // Reloads the updated user list
       })
-      .then(() => {
-        alert('Updated successfully!');
-        setIsEditing(false); // Close the edit mode
-        loadPage(); // Optionally reload the data
-      })
-      .catch((error) => {
-        alert('Update failed: ' + error.message);
-      });
+      .catch((error) => alert('Error: ' + error.message));
   };
-  
-  
+
+
+
 
   return (
     <React.Fragment>
@@ -388,87 +393,87 @@ function Row({ val }) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            sx={{color:'black'}}
+            sx={{ color: 'black' }}
           >
-            {open ? <KeyboardArrowUpIcon    sx={{color:'black'}} /> : <KeyboardArrowDownIcon     sx={{color:'black'}}/>}
+            {open ? <KeyboardArrowUpIcon sx={{ color: 'black' }} /> : <KeyboardArrowDownIcon sx={{ color: 'black' }} />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-  {isEditing ? (
-    <Box>
-      <WhiteTextField
-        label="img"
-        value={newData.img}
-        onChange={(e) => setNewData({ ...newData, img: e.target.value })}
-      />
-      <WhiteTextField
-        label="fname"
-        value={newData.fname}
-        onChange={(e) => setNewData({ ...newData, fname: e.target.value })}
-      />
-      <WhiteTextField
-        label="lname"
-        value={newData.lname}
-        onChange={(e) => setNewData({ ...newData, lname: e.target.value })}
-      />
-      <WhiteTextField
-        label="status"
-        value={newData.role}
-        onChange={(e) => setNewData({ ...newData, status: e.target.value })}
-      />
-      <WhiteTextField
-        label="email"
-        value={newData.email}
-        onChange={(e) => setNewData({ ...newData, email: e.target.value })}
-      />
-      <WhiteTextField
-        label="mobile"
-        value={newData.mobile}
-        onChange={(e) => setNewData({ ...newData, mobile: e.target.value })}
-      />
-      <WhiteTextField
-        label="pass"
-        value={newData.pass}
-        onChange={(e) => setNewData({ ...newData, pass: e.target.value })}
-      />
-      <WhiteTextField
-        label="user"
-        value={newData.user}
-        onChange={(e) => setNewData({ ...newData, user: e.target.value })}
-      />
-      <WhiteTextField
-        label="city"
-        value={newData.city}
-        onChange={(e) => setNewData({ ...newData, city: e.target.value })}
-      />
-      <WhiteTextField
-        label="street"
-        value={newData.street}
-        onChange={(e) => setNewData({ ...newData, street: e.target.value })}
-      />
-      <WhiteTextField
-        label="age"
-        value={newData.age}
-        onChange={(e) => setNewData({ ...newData, age: e.target.value })}
-      />
+          {isEditing ? (
+            <Box>
+              <WhiteTextField
+                label="img"
+                value={newData.img}
+                onChange={(e) => setNewData({ ...newData, img: e.target.value })}
+              />
+              <WhiteTextField
+                label="fname"
+                value={newData.fname}
+                onChange={(e) => setNewData({ ...newData, fname: e.target.value })}
+              />
+              <WhiteTextField
+                label="lname"
+                value={newData.lname}
+                onChange={(e) => setNewData({ ...newData, lname: e.target.value })}
+              />
+              <WhiteTextField
+                label="status"
+                value={newData.role}
+                onChange={(e) => setNewData({ ...newData, status: e.target.value })}
+              />
+              <WhiteTextField
+                label="email"
+                value={newData.email}
+                onChange={(e) => setNewData({ ...newData, email: e.target.value })}
+              />
+              <WhiteTextField
+                label="mobile"
+                value={newData.mobile}
+                onChange={(e) => setNewData({ ...newData, mobile: e.target.value })}
+              />
+              <WhiteTextField
+                label="pass"
+                value={newData.pass}
+                onChange={(e) => setNewData({ ...newData, pass: e.target.value })}
+              />
+              <WhiteTextField
+                label="user"
+                value={newData.user}
+                onChange={(e) => setNewData({ ...newData, user: e.target.value })}
+              />
+              <WhiteTextField
+                label="city"
+                value={newData.city}
+                onChange={(e) => setNewData({ ...newData, city: e.target.value })}
+              />
+              <WhiteTextField
+                label="street"
+                value={newData.street}
+                onChange={(e) => setNewData({ ...newData, street: e.target.value })}
+              />
+              <WhiteTextField
+                label="age"
+                value={newData.age}
+                onChange={(e) => setNewData({ ...newData, age: e.target.value })}
+              />
 
-      <IconButton onClick={handleSave}>
-        <EditNoteIcon sx={{color:'black'}} />
-      </IconButton>
-    </Box>
-  ) : (
-    <Box display="flex" alignItems="center" gap={1}>
-      {newData.img && (
-        <img
-          src={newData.img}
-          alt="User"
-          style={{ width: 40, height: 40, borderRadius: "50%" }}
-        />
-      )}
-      <span>{newData.fname} {newData.lname}</span>
-    </Box>
-  )}
-</TableCell>
+              <IconButton onClick={handleSave}>
+                <EditNoteIcon sx={{ color: 'black' }} />
+              </IconButton>
+            </Box>
+          ) : (
+            <Box display="flex" alignItems="center" gap={1}>
+              {newData.img && (
+                <img
+                  src={newData.img}
+                  alt="User"
+                  style={{ width: 40, height: 40, borderRadius: "50%" }}
+                />
+              )}
+              <span>{newData.fname} {newData.lname}</span>
+            </Box>
+          )}
+        </TableCell>
 
         <TableCell align="left"> {/* Empty Status Column */}
           {/* You can add status text here if needed */}
@@ -477,9 +482,23 @@ function Row({ val }) {
         <TableCell align="left">{val.email}</TableCell>
         <TableCell align="left">{val.city},{val.street}</TableCell>
         <TableCell align="left">{val.mobile}</TableCell>
+        <TableCell align="center">
+          {val.id === 0 ? null : ( // Do not render edit icon for ID 1
+            <IconButton onClick={handleEditClick}>
+              <EditNoteIcon sx={{ color: 'black' }} />
+            </IconButton>
+          )}
+        </TableCell>
+        <TableCell align="center">
+          {val._id === 1 ? null : ( // Ensure you're using the correct property (_id) for the user
+            <IconButton onClick={handleDelete}> {/* Invokes handleDelete */}
+              <DeleteOutlineIcon sx={{ color: 'black' }} />
+            </IconButton>
+          )}
+        </TableCell>
 
-       
-     
+
+
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -499,48 +518,48 @@ function Row({ val }) {
     </React.Fragment>
   );
 }
-function loadPage() {
-    fetch('https://rosegoldgallery-back.onrender.com/api/user')  // Ensure this API is available
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Failed to load data');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setData(data); // Assuming you have a state variable called 'data'
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        alert('Error fetching data: ' + error.message);
-      });
+const loadPage = (setData) => {
+  fetch('https://rosegoldgallery-back.onrender.com/api/user')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Failed to load data');
+      }
+      return res.json();
+    })
+    .then(data => {
+      console.log('Fetched data:', data);
+      setData(data); // Call setData passed as an argument
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      alert('Error fetching data: ' + error.message);
+    });
+};
+
+
+
+const myDel = (itemId) => {
+  if (!itemId) {
+    alert('Invalid ID');
+    return;
   }
-  
-  function myDel(itemId) {
-    if (!itemId) {
-      alert('Invalid ID');
-      return;
-    }
-  
-    if (window.confirm('Are you sure you want to delete it?')) {
-      fetch(`https://rosegoldgallery-back.onrender.com/api/user/${itemId}`, {
-        method: 'DELETE',
-      })
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error('Failed to delete');
-        })
-        .then(() => {
-          alert('Deleted...!');
-          loadPage(); // Call a function to reload the data
-        })
-        .catch(error => {
-          alert('Error: ' + error.message);
-        });
-    }
-  }
-  
-  
-  
+
+  fetch(`https://rosegoldgallery-back.onrender.com/api/user/${itemId}`, {
+    method: 'DELETE',
+  })
+    .then((res) => {
+      if (res.ok) {
+        alert('Deleted successfully!');
+        loadPage(); // Refresh data after deletion
+      } else {
+        throw new Error('Failed to delete');
+      }
+    })
+    .catch((error) => {
+      alert('Error: ' + error.message);
+    });
+};
+
+
+
+
