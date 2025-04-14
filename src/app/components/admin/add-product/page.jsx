@@ -81,7 +81,7 @@ export default function AddProduct() {
     
             if (res.ok) {
                 alert("Product added successfully!");
-                router.push("/components/admin");
+                router.push("/components/admin/products");
             } else {
                 alert("Failed to add product: " + responseData.message);
             }

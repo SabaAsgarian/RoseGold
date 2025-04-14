@@ -24,11 +24,11 @@ export default function Page() {
     <>
       <PrimarySearchAppBar /> {/* Moved to the top */}
       <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-       <Box sx={{width:'100%',height:'100%'}}>
-       <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
-          <Image src={gif} alt="GIF" style={{width:'100%' , height:'auto'}}/> {/* Full width GIF */}
-        </Link>
-       </Box>
+        <Box sx={{ width: '100%', height: '100%' }}>
+          <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
+            <Image src={gif} alt="GIF" style={{ width: '100%', height: 'auto' }} /> {/* Full width GIF */}
+          </Link>
+        </Box>
 
         {/* Grid for images */}
         <Grid container spacing={0} sx={{ marginTop: 2 }}>
@@ -50,7 +50,15 @@ export default function Page() {
                   }
                 }}
               >
-                <Image src={rin} alt="Rings" layout="responsive" />
+                <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1 / 1' }}>
+                  <Image
+                    src={rin}
+                    alt="Rings"
+                    fill // This makes the image fill the parent box
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Box>
+
                 <Box
                   className="caption" // Add a class to target in hover
                   sx={{
@@ -89,7 +97,16 @@ export default function Page() {
                   }
                 }}
               >
-                <Image src={nec} alt="Necklace" layout="responsive" />
+
+                <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1 / 1' }}>
+                  <Image
+                    src={nec}
+                    alt="necklace"
+                    fill // This makes the image fill the parent box
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Box>
+
                 <Box
                   className="caption" // Add a class to target in hover
                   sx={{
@@ -128,7 +145,16 @@ export default function Page() {
                   }
                 }}
               >
-                <Image src={brac} alt="Bracelet" layout="responsive" />
+
+                <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1 / 1' }}>
+                  <Image
+                    src={brac}
+                    alt="bracelet"
+                    fill // This makes the image fill the parent box
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Box>
+
                 <Box
                   className="caption" // Add a class to target in hover
                   sx={{
@@ -167,7 +193,16 @@ export default function Page() {
                   }
                 }}
               >
-                <Image src={eari} alt="Earrings" layout="responsive" />
+
+                <Box sx={{ position: 'relative', width: '100%', aspectRatio: '1 / 1' }}>
+                  <Image
+                    src={eari}
+                    alt="Earrings"
+                    fill // This makes the image fill the parent box
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Box>
+
                 <Box
                   className="caption" // Add a class to target in hover
                   sx={{
@@ -206,7 +241,27 @@ export default function Page() {
 
               }}
             >
-              <Image src={left} alt="Earrings" layout="responsive" />
+
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: '16 / 16', // یا هر نسبت تصویری مناسب
+                  border: '1px solid black',
+                  cursor: 'pointer',
+                  bgcolor: '#f1eee4cc',
+                  color: 'black'
+                }}
+              >
+                <Image
+                  src={left}
+                  alt="Earrings"
+                  fill
+                  style={{ objectFit: 'cover' }} // یا 'contain' بسته به نیاز
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                {/* Captions as before */}
+              </Box>
               <Box
                 className="caption" // Add a class to target in hover
                 sx={{
@@ -265,7 +320,27 @@ export default function Page() {
 
               }}
             >
-              <Image src={right} alt="necklace" layout="responsive" />
+
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: '16 / 16', // یا هر نسبت تصویری مناسب
+                  border: '1px solid black',
+                  cursor: 'pointer',
+                  bgcolor: '#f1eee4cc',
+                  color: 'black'
+                }}
+              >
+                <Image
+                  src={right}
+                  alt="Earrings"
+                  fill
+                  style={{ objectFit: 'cover' }} // یا 'contain' بسته به نیاز
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                {/* Captions as before */}
+              </Box>
               <Box
                 className="caption" // Add a class to target in hover
                 sx={{
@@ -341,7 +416,7 @@ export default function Page() {
       </Box>
       <Swiper />
       {/* g//////////////////////////////////////////////////////// */}
-      <Grid container spacing={0} sx={{ marginTop: '10%',backgroundColor:'#faf7ef' }} className='Last'>
+      <Grid container spacing={0} sx={{ marginTop: '10%', backgroundColor: '#faf7ef' }} className='Last'>
         <Grid item xs={12} md={6} lg={6} xl={6}>
 
 
@@ -382,14 +457,14 @@ export default function Page() {
               }}
             >
               <h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'start' }} className='h1 w-full'>We Design Gold Differently</h1> {/* Updated text alignment */}
-             <Box style={{ textAlign: 'start', marginLeft: '0',width:'100%' }}>
-             <p className='p' style={{width:'70%'}}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
-             </Box>
+              <Box style={{ textAlign: 'start', marginLeft: '0', width: '100%' }}>
+                <p className='p' style={{ width: '70%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
+              </Box>
               <Box className='listt' style={{ textAlign: 'start', marginLeft: '0' }}> {/* Updated text alignment */}
-                <p style={{ fontWeight: 'bolder',width:'100%' }}>High commitment</p>
-                <p style={{ fontWeight: 'bolder',width:'100%' }}>Innovation in design</p>
-                <p style={{ fontWeight: 'bolder',width:'100%' }}>24 hour response</p>
-                <p style={{ fontWeight: 'bolder',width:'100%' }}>sustainability</p>
+                <p style={{ fontWeight: 'bolder', width: '100%' }}>High commitment</p>
+                <p style={{ fontWeight: 'bolder', width: '100%' }}>Innovation in design</p>
+                <p style={{ fontWeight: 'bolder', width: '100%' }}>24 hour response</p>
+                <p style={{ fontWeight: 'bolder', width: '100%' }}>sustainability</p>
               </Box>
             </Box>
             <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
@@ -435,8 +510,26 @@ export default function Page() {
           >
 
 
-            <Image src={last} alt="necklace" layout="responsive" />
-
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '16 / 16', // یا هر نسبت تصویری مناسب
+              
+                cursor: 'pointer',
+                bgcolor: '#faf7ef',
+                color: 'black'
+              }}
+            >
+              <Image
+                src={last}
+                alt="rings"
+                fill
+                style={{ objectFit: 'contain' }} // یا 'contain' بسته به نیاز
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              {/* Captions as before */}
+            </Box>
 
 
           </Box>
@@ -459,11 +552,11 @@ export default function Page() {
         <Box sx={{ fontWeight: 'bold', color: 'black', marginBottom: 5, fontSize: '25px' }}>
           Our Branches
         </Box>
-        
+
       </Box>
-      <Swiperbranches style={{marginBottom:'5%',marginTop:'5%'}}/>
+      <Swiperbranches style={{ marginBottom: '5%', marginTop: '5%' }} />
       {/* f///////////////////last///////////////////////////// */}
-      <Box sx={{margin:'20%'}}>
+      <Box sx={{ margin: '20%' }}>
 
       </Box>
       <Footer />

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import necklace from '../img/necklace.jpg';
 import  useStore  from './../../store' ;
 import Footer from './../footer'
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import CustomizedBreadcrumbs from './../bradcrumbs'
 async function getData() {
 
@@ -61,8 +61,11 @@ const NecklacePage = () => {
     <div>
       <PrimarySearchAppBar />
       <h1>Necklace</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%' }}>
-        <Image src={necklace} layout="responsive" alt='necklace' priority />
+      
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%'}}>
+        <div style={{ position: 'relative', width: '100%', height: '250px' }}>
+          <Image src={necklace} alt="necklace" fill style={{ objectFit: 'cover' }} priority />
+        </div>
       </div>
       <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
        <CustomizedBreadcrumbs/>
@@ -75,7 +78,10 @@ const NecklacePage = () => {
         margin: '5% auto'
       }}>
         {loading ? (
-          <p>Loading products...</p>
+         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+         <p>Loading products...</p>
+         <CircularProgress color="inherit" />
+       </Box>
         ) : error ? (
           <p>Error: {error}</p>
         ) : data.length > 0 ? (

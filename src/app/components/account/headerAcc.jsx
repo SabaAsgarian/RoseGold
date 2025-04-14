@@ -17,18 +17,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import logo from './img/logo.png'
+import logo from '../img/logo.png'
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import LongMenu from './LongMenu'; // Ensure this import is correct
+
 import Link from 'next/link';
 import Image from 'next/image';
-import myContext from '../myContext';
-import Avatar from '@mui/material/Avatar';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
+
 import { styled as muiStyled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -42,9 +39,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { useMediaQuery } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import axios from 'axios'; // Import axios for API calls
-import StarIcon from '@mui/icons-material/Star';
-import left from './img/homeleft.jpg'
-import right from './img/homeright.jpg'
+
 // New styled component for the header
 const HeaderContainer = muiStyled(Box)(({ theme }) => ({
   backgroundColor: '#f1eee4',
@@ -330,12 +325,12 @@ export default function PrimarySearchAppBar() {
           <Toolbar>
             {/* Left Icons */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Link href="../components/basket">
+              <Link href="../basket">
                 <StyledIconButton>
                   <LocalMallOutlinedIcon />
                 </StyledIconButton>
               </Link>
-              <Link href="../components/account">
+              <Link href="../account">
                 <StyledIconButton>
                   <PersonOutlineOutlinedIcon />
                 </StyledIconButton>
@@ -358,12 +353,12 @@ export default function PrimarySearchAppBar() {
             {/* Right Links and Menu */}
             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
               <StyledLink href="/">Home</StyledLink>
-              <StyledLink href="../components/shop">All</StyledLink>
-              <StyledLink href="../components/bracelet">Bracelet</StyledLink>
-              <StyledLink href="../components/earings">Earrings</StyledLink>
-              <StyledLink href="../components/rings">Rings</StyledLink>
-              <StyledLink href="../components/necklace">Necklace</StyledLink>
-              <StyledLink href="../components/admin/login">Admin Panel</StyledLink>
+              <StyledLink href="../shop">All</StyledLink>
+              <StyledLink href="../bracelet">Bracelet</StyledLink>
+              <StyledLink href="../earings">Earrings</StyledLink>
+              <StyledLink href="../rings">Rings</StyledLink>
+              <StyledLink href="../necklace">Necklace</StyledLink>
+              <StyledLink href="../admin/login">Admin Panel</StyledLink>
             </Box>
             {isSmallScreen && (
               <IconButton
@@ -395,32 +390,32 @@ export default function PrimarySearchAppBar() {
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/shop">
+                <StyledListItemButton component="a" href="../shop">
                   <ListItemText primary="All" />
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/bracelet">
+                <StyledListItemButton component="a" href="../bracelet">
                   <ListItemText primary="Bracelet" />
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/earings">
+                <StyledListItemButton component="a" href="../earings">
                   <ListItemText primary="Earrings" />
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/rings">
+                <StyledListItemButton component="a" href="../rings">
                   <ListItemText primary="Rings" />
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/necklace">
+                <StyledListItemButton component="a" href="../necklace">
                   <ListItemText primary="Necklace" />
                 </StyledListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <StyledListItemButton component="a" href="../components/admin/login">
+                <StyledListItemButton component="a" href="../admin/login">
                   <ListItemText primary="Admin Panel" />
                 </StyledListItemButton>
               </ListItem>

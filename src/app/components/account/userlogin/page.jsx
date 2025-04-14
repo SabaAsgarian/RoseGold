@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Link from "next/link";
 import { useUser } from "../../../context/mycontext";
-
+import Header from '../headerAcc';
+import Footer from '../footerAcc';
+import CustomizedBreadcrumbs from '../bradcrumbsAcc'
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
 
 const StyledForm = styled("form")({
@@ -39,10 +41,10 @@ const WhiteTextField = styled(TextField)({
 });
 
 const StyledButton = styled(Button)({
-  backgroundColor: "#a9dfd8",
-  color: "black",
+  backgroundColor: "black",
+  color: "white",
   "&:hover": {
-    backgroundColor: "#8fcfc8",
+    backgroundColor: "#3e3e3e",
   },
 });
 
@@ -125,10 +127,15 @@ export default function UserLogin({}) {
   });
 
   return (
+    <div className="bg-[#f2f4f8]">
+    <Header/>
+    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+       <CustomizedBreadcrumbs/>
+      </Box>
     <Container
       maxWidth="2xl"
       sx={{
-        backgroundColor: "#f2f4f8",
+       
         minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
@@ -209,5 +216,7 @@ export default function UserLogin({}) {
         </Box>
       </Container>
     </Container>
+    <Footer/>
+    </div>
   );
 }

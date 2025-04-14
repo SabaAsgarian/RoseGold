@@ -8,7 +8,9 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Link from "next/link";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import React from "react";
-
+import Header from '../headerAcc';
+import Footer from '../footerAcc';
+import CustomizedBreadcrumbs from '../bradcrumbsAcc'
 const StyledForm = styled("form")({
   display: "flex",
   flexDirection: "column",
@@ -38,10 +40,10 @@ const WhiteTextField = styled(TextField)({
 });
 
 const StyledButton = styled(Button)({
-  backgroundColor: "#a9dfd8",
-  color: "black",
+  backgroundColor: "black",
+  color: "white",
   "&:hover": {
-    backgroundColor: "#8fcfc8",
+    backgroundColor: "#3e3e3e",
   },
 });
 
@@ -173,8 +175,13 @@ export default function UserRegister() {
   };
 
   return (
+    <>
+    <Header/>
+    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+       <CustomizedBreadcrumbs/>
+      </Box>
     <Container maxWidth="2xl" sx={{
-      backgroundColor: "#f2f4f8",
+     
       minHeight: "100vh",
       display: "flex",
       justifyContent: "center",
@@ -229,7 +236,7 @@ export default function UserRegister() {
                   </Button>
                 </Box>
               ) : (
-                <Button
+                <StyledButton
                   component="label"
                   variant="contained"
                   startIcon={<CloudUploadIcon />}
@@ -241,7 +248,7 @@ export default function UserRegister() {
                     accept="image/*"
                     onChange={handleImageChange}
                   />
-                </Button>
+                </StyledButton>
               )}
             </Box>
 
@@ -360,5 +367,7 @@ export default function UserRegister() {
         </Box>
       </Container>
     </Container>
+    <Footer/>
+    </>
   );
 }

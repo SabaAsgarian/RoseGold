@@ -7,7 +7,7 @@ import Image from 'next/image';
 import  useStore  from './../../store' ;
 import Footer from './../footer'
 import CustomizedBreadcrumbs from './../bradcrumbs'
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 async function getData() {
 
   const res = await fetch('https://rosegoldgallery-back.onrender.com/api/category/rings');
@@ -63,8 +63,11 @@ const RingsPage = () => {
     <div>
       <PrimarySearchAppBar />
       <h1>Rings</h1>
-      <div style={{ display: 'flex', justifyContent: 'center' , marginBottom:'3%'}}>
-        <Image src={ring} layout="responsive"  alt='ringhead' priority />
+    
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%'}}>
+        <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+          <Image src={ring} alt="rings" fill style={{ objectFit: 'cover' }} priority />
+        </div>
       </div>
       <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
        <CustomizedBreadcrumbs/>
@@ -77,7 +80,10 @@ const RingsPage = () => {
         margin: '5% auto'
       }}>
         {loading ? (
+          <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
           <p>Loading products...</p>
+          <CircularProgress color="inherit" />
+        </Box>
         ) : error ? (
           <p>Error: {error}</p>
         ) : data.length > 0 ? (

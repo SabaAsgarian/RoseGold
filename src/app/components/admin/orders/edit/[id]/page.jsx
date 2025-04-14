@@ -261,6 +261,7 @@ export default function EditOrder({ params }) {
                             <MenuItem value="processing"> processing </MenuItem>
                             <MenuItem value="shipped">shipped </MenuItem>
                             <MenuItem value="delivered">delivered  </MenuItem>
+                            <MenuItem value="completed">completed  </MenuItem>
                             <MenuItem value="cancelled"> cancelled</MenuItem>
                           </WhiteTextField>
                           <IconButton onClick={handleSave} color="primary">
@@ -280,6 +281,7 @@ export default function EditOrder({ params }) {
                             {order.status === 'processing' && 'processing  '}
                             {order.status === 'shipped' && 'shipped '}
                             {order.status === 'delivered' && 'delivered  '}
+                            {order.status === 'completed' && 'completed  '}
                             {order.status === 'cancelled' && 'cancelled '}
                           </Typography>
                           <IconButton onClick={() => setIsEditing(true)}>

@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Header from '../header';
-import Footer from '../footer'
+import Footer from '../footer';
+import CustomizedBreadcrumbs from '../bradcrumbs'
 export default function ThankYou() {
   const router = useRouter();
   const [order, setOrder] = useState(null);
@@ -42,6 +43,9 @@ export default function ThankYou() {
   return (
    <div>
     <Header/>
+    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+       <CustomizedBreadcrumbs/>
+      </Box>
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper sx={{ p: 4, textAlign: 'center' }}>
         <CheckCircleOutlineIcon sx={{ fontSize: 60, color: 'success.main', mb: 2 }} />

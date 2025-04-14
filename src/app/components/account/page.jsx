@@ -22,7 +22,7 @@ import Header from "../header";
 import Footer from "../footer";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import CustomizedBreadcrumbs from "../bradcrumbs";
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   margin: theme.spacing(2),
@@ -100,31 +100,64 @@ export default function AccountPage() {
     onSubmit: async (values) => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${API_BASE_URL}/api/user/${user.id}`, {
+        
+        if (!token || isTokenExpired(token)) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push("/components/account/userlogin");
+          return;
+        }
+
+        const userId = user._id || user.id;
+        const response = await fetch(`${API_BASE_URL}/api/user/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(values)
+          body: JSON.stringify({
+            ...values,
+            _id: userId,
+            id: userId
+          })
         });
 
-        if (response.ok) {
-          const updatedUser = await response.json();
-          setUser(updatedUser);
-          localStorage.setItem('user', JSON.stringify(updatedUser));
-          setIsEditing(false);
-          alert('Profile updated successfully!');
-        } else {
-          throw new Error('Failed to update profile');
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push("/components/account/userlogin");
+          return;
         }
+
+        const updatedUser = await response.json();
+        
+        // Ensure we preserve the ID fields
+        const userToSave = {
+          ...updatedUser,
+          _id: userId,
+          id: userId
+        };
+
+        setUser(userToSave);
+        localStorage.setItem('user', JSON.stringify(userToSave));
+        setIsEditing(false);
+        formik.resetForm(); // Reset form after successful update
+        alert('Profile updated successfully!');
       } catch (error) {
+        console.error('Update error:', error);
+        if (error.message.includes('unauthorized') || error.message.includes('token')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push("/components/account/userlogin");
+          return;
+        }
         alert('Error updating profile: ' + error.message);
       }
     },
   });
 
   const handleEdit = () => {
+    // Ensure we have the latest user data when entering edit mode
     formik.setValues({
       fname: user.fname || '',
       lname: user.lname || '',
@@ -133,7 +166,9 @@ export default function AccountPage() {
       age: user.age || '',
       city: user.city || '',
       street: user.street || '',
-      role: user.role || ''
+      role: user.role || '',
+      _id: user._id || user.id, // Include ID fields
+      id: user._id || user.id
     });
     setIsEditing(true);
   };
@@ -144,20 +179,42 @@ export default function AccountPage() {
   };
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery-back.onrender.com";
+   
+  // Add this function to check if token is expired
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+    
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 < Date.now();
+    } catch (error) {
+      return true;
+    }
+  };
 
+  // Modify useEffect to check token expiration
   useEffect(() => {
     const fetchUserAndOrders = async () => {
+      const token = localStorage.getItem('token');
       const userData = localStorage.getItem('user');
-      if (!userData) {
+
+      if (!token || !userData || isTokenExpired(token)) {
+        // Clear localStorage if token is expired
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         router.push("/components/account/userlogin");
         return;
       }
 
       try {
         const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
+        const userWithIds = {
+          ...parsedUser,
+          _id: parsedUser._id || parsedUser.id,
+          id: parsedUser._id || parsedUser.id
+        };
+        setUser(userWithIds);
 
-        const token = localStorage.getItem('token');
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -165,12 +222,27 @@ export default function AccountPage() {
           }
         });
 
+        // Check if response indicates token expiration
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push("/components/account/userlogin");
+          return;
+        }
+
         if (response.ok) {
           const ordersData = await response.json();
           setOrders(ordersData);
         }
       } catch (error) {
         console.error("Error:", error);
+        // If there's an authentication error, redirect to login
+        if (error.message.includes('unauthorized') || error.message.includes('token')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push("/components/account/userlogin");
+          return;
+        }
       } finally {
         setLoading(false);
       }
@@ -203,12 +275,32 @@ export default function AccountPage() {
     </Box>
   );
 
-  if (loading) return <CircularProgress />;
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width:'100%',
+          height:'80vh'
+        }}
+      >
+        <p>Loading...</p>
+        <CircularProgress color="inherit" />
+      </Box>
+    );
+  }
+  
   if (!user) return <Typography>Please Sign In To Your Account.</Typography>;
 
   return (
     <div>
       <Header />
+      <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+       <CustomizedBreadcrumbs/>
+      </Box>
       <Container maxWidth="md" sx={{ py: 4 }}>
         <StyledPaper>
           <Box sx={{ textAlign: 'center', mb: 4 }}>
@@ -216,6 +308,8 @@ export default function AccountPage() {
               src={user.img}
               alt={`${user.fname} ${user.lname}`}
               sx={{
+                border:'1px solid black',
+                borderRadius:'50%',
                 width: 120,
                 height: 120,
                 margin: '0 auto',
@@ -396,21 +490,32 @@ export default function AccountPage() {
                         <Box
                           sx={{
                             backgroundColor:
+                           
+                            order.status === "pending"
+                              ? "#ffc107" // Light yellow for "pending"
+                              : order.status === "processing"
+                              ? "#ff9800" // Deep orange for "processing"
+                              : order.status === "completed"
+                              ? "#2196f3" // Vibrant blue for "completed"
+                              : order.status === "shipped"
+                              ? "#4caf50" // Fresh green for "shipped"
+                              : order.status === "delivered"
+                              ? "#8bc34a" // Lime green for "delivered"
+                              : "#f44336", // Bold red for unknown or error
+                          
+                              color:
                               order.status === "pending"
-                                ? "#fff3cd"
+                                ? "black" // Black for light yellow background
                                 : order.status === "processing"
-                                ? "#cfe2ff"
+                                ? "white" // White for deep orange background
                                 : order.status === "completed"
-                                ? "#d1e7dd"
-                                : "#f8d7da",
-                            color:
-                              order.status === "pending"
-                                ? "#856404"
-                                : order.status === "processing"
-                                ? "#084298"
-                                : order.status === "completed"
-                                ? "#0f5132"
-                                : "#842029",
+                                ? "white" // White for vibrant blue background
+                                : order.status === "shipped"
+                                ? "white" // White for fresh green background
+                                : order.status === "delivered"
+                                ? "white" // White for lime green background
+                                : "white", // White for the bold red background
+                            
                             padding: "4px 8px",
                             borderRadius: "4px",
                             display: "inline-block",
