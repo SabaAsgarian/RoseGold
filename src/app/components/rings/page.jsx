@@ -62,7 +62,7 @@ const RingsPage = () => {
   return (
     <div>
       <PrimarySearchAppBar />
-      <h1>Rings</h1>
+      <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Rings</h1>
     
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%'}}>
         <div style={{ position: 'relative', width: '100%', height: '300px' }}>

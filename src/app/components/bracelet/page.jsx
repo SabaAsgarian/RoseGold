@@ -62,7 +62,7 @@ const BraceletPage = () =>  {
   return (
     <div>
       <PrimarySearchAppBar />
-      <h1>Bracelet</h1>
+      <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Bracelet</h1>
       
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%'}}>
         <div style={{ position: 'relative', width: '100%', height: '230px' }}>

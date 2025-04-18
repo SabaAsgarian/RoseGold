@@ -127,9 +127,9 @@ export default function UserLogin({}) {
   });
 
   return (
-    <div className="bg-[#f2f4f8]">
+    <>
     <Header/>
-    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '2% auto' }}>
        <CustomizedBreadcrumbs/>
       </Box>
     <Container
@@ -151,7 +151,7 @@ export default function UserLogin({}) {
           justifyContent: "center",
           alignItems: "center",
           borderRadius: "10px",
-          boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.75)",
+          boxShadow: "0px 0px 10px 2px rgba(0, 0, 0, 0.75)",
         }}
       >
         <Box
@@ -163,14 +163,14 @@ export default function UserLogin({}) {
           }}
         >
           <StyledForm onSubmit={formik.handleSubmit}>
-            <h1>Login</h1>
+          <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Login</h1>
 
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email:</label>
             <WhiteTextField
               id="email"
               name="email"
               type="email"
-              label="Email"
+              placeholder="Email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -178,11 +178,12 @@ export default function UserLogin({}) {
               helperText={formik.touched.email && formik.errors.email}
             />
 
-            <label htmlFor="pass">Password</label>
+            <label htmlFor="pass">Password:</label>
             <WhiteTextField
               id="pass"
               name="pass"
               type="password"
+              placeholder="Password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.pass}
@@ -217,6 +218,6 @@ export default function UserLogin({}) {
       </Container>
     </Container>
     <Footer/>
-    </div>
+    </>
   );
 }

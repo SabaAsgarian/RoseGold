@@ -28,7 +28,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   margin: theme.spacing(2),
   backgroundColor: "#ffffff",
   borderRadius: "10px",
-  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+  boxShadow: "0px 0px 8px 1px rgba(0, 0, 0, 0.75)", 
 }));
 
 const WhiteTextField = styled(TextField)({
@@ -298,10 +298,11 @@ export default function AccountPage() {
   return (
     <div>
       <Header />
-      <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+      <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Account Center</h1>
+      <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '1.5% auto' }}>
        <CustomizedBreadcrumbs/>
       </Box>
-      <Container maxWidth="md" sx={{ py: 4 }}>
+      <Container maxWidth="md" sx={{ py: 4}}>
         <StyledPaper>
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Avatar
@@ -314,7 +315,8 @@ export default function AccountPage() {
                 height: 120,
                 margin: '0 auto',
                 mb: 2,
-                bgcolor: user.img ? 'transparent' : '#1976d2'
+                bgcolor: user.img ? 'transparent' : '#1976d2',
+                
               }}
             >
               {!user.img && user.fname?.[0]?.toUpperCase()}

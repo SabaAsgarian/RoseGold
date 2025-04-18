@@ -9,7 +9,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import myContext from '../myContext'; // If you still need this context
 import useStore from './../store';
-
+import '../globals.css'
 export default function MultiActionAreaCard({ data }) { // Accept data as a prop
     const temp = {
         id: data._id,
@@ -24,14 +24,16 @@ export default function MultiActionAreaCard({ data }) { // Accept data as a prop
         <myContext.Provider value={data} key={'post' + data._id}>
 
 
-            <Card sx={{ maxWidth: 355, border: '1px solid black' }}>
+            <Card sx={{ maxWidth: 350, border: '1px solid black' }}>
                 <CardActionArea>
-                    <div style={{ backgroundColor: '#faf7f1', padding: '16px' }}> {/* Added div for background color */}
+                    <div style={{ backgroundColor: '#faf7f1' ,mixBlendMode:'multiply'}} className='firstt'> {/* Added div for background color */}
                         <CardMedia
                             component="img"
-                            height="220"
+                           
                             image={`https://rosegoldgallery-back.onrender.com/${data.img}`}
                             alt={data.category}
+                            style={{backgroundColor: '#faf7f1' ,mixBlendMode:'multiply',height:'300px'}}
+                            className='secondd'
                         />
                     </div>
                     <CardContent>

@@ -87,16 +87,16 @@ export default function AdminRegister() {
 
     return (
         <div>
-            <Container maxWidth='2xl' sx={{ backgroundColor: '#f2f4f8', minHeight: '120vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Container className='container' maxWidth="sm" sx={{ backgroundColor: '#ffffff', minHeight: '60vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.75)' }}>
+            <Container maxWidth='2xl' sx={{ backgroundColor: '#f2f4f8', minHeight: '150vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Container className='container' maxWidth="sm" sx={{ backgroundColor: '#ffffff', minHeight: '60vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.75)',marginTop:'5%',marginBottom:'10%' }}>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <h1>Admin Register</h1>
+                    <h1 style={{width:'50%', textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Admin Register</h1>
                         <form onSubmit={formik.handleSubmit}>
                             {/* First Name */}
 
                             <div>
-                                <Box>
-                                    <label className="font-loginform" htmlFor="fname">First Name</label>
+                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                    <label className="font-loginform" htmlFor="fname">First Name:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"
@@ -122,8 +122,8 @@ export default function AdminRegister() {
 
                             {/* Last Name */}
                             <div>
-                                <Box>
-                                    <label className="font-loginform" htmlFor="lname">Last Name</label>
+                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                    <label className="font-loginform" htmlFor="lname">Last Name:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"
@@ -149,8 +149,8 @@ export default function AdminRegister() {
 
                             {/* Email */}
                             <div>
-                                <Box>
-                                    <label className="font-loginform" htmlFor="email">Email</label>
+                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                    <label className="font-loginform" htmlFor="email">Email:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"
@@ -176,8 +176,8 @@ export default function AdminRegister() {
 
                             {/* Password */}
                             <div>
-                                <Box>
-                                    <label className="font-loginform" htmlFor="pass">Password</label>
+                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                    <label className="font-loginform" htmlFor="pass">Password:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"
@@ -203,8 +203,8 @@ export default function AdminRegister() {
 
                             {/* Role */}
                             <div>
-                                <Box>
-                                    <label className="font-loginform" htmlFor="role">Role</label>
+                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                    <label className="font-loginform" htmlFor="role">Role:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"

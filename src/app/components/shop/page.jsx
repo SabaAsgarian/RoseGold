@@ -40,7 +40,7 @@ export default function Page() {
 
       <Grid container spacing={5} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width:{xs:'90%',sm:'60%'}, margin: '0 auto' }}>
         {/* Ring */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={8} lg={6}>
           <Link href="./rings" passHref>
             <Box
               sx={{
@@ -80,7 +80,7 @@ export default function Page() {
         </Grid>
 
         {/* Necklace */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={8} lg={6}>
           <Link href="./necklace" passHref>
             <Box
               sx={{
@@ -120,7 +120,7 @@ export default function Page() {
         </Grid>
 
         {/* Bracelet */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={8} lg={6}>
           <Link href="./bracelet" passHref>
             <Box
               sx={{
@@ -160,7 +160,7 @@ export default function Page() {
         </Grid>
 
         {/* Earrings */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={8} lg={6}>
           <Link href="./earings" passHref>
             <Box
               sx={{

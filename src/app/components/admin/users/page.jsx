@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Box, Button, FormControl, Input, InputLabel, InputAdornment, TextField } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Box, Button, FormControl, Input, InputLabel, InputAdornment, TextField, Grid } from '@mui/material';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import B from '../../bradcrumbs'
-
+import SearchIcon from '@mui/icons-material/Search';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -48,7 +48,7 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 const WhiteTextField = styled(TextField)({
-  backgroundColor: '#a9dfd8',
+  backgroundColor: 'white',
   borderRadius: '4px',
   '& .MuiInputBase-input': {
     color: 'black', // Text color
@@ -103,10 +103,14 @@ function createData(name, calories, fat, carbs, protein, street) {
 export default function page() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 4;
 
   useEffect(() => {
-    loadPage(setData); // Pass setData to loadPage
+    loadPage(setData);
   }, []);
+
   const [formData, setFormData] = useState({
     img: '',
     fname: '',
@@ -148,199 +152,256 @@ export default function page() {
           throw new Error('Failed to add user');
         }
         alert('New user added!');
-        setFormData({ img: '', fname: '', lname: '', street: '', role: '', user: '', age: '', pass: '', city: '', email: '', mobile: '' }); // Reset form
+        setFormData({ 
+          img: '', 
+          fname: '', 
+          lname: '', 
+          street: '', 
+          role: '', 
+          user: '', 
+          age: '', 
+          pass: '', 
+          city: '', 
+          email: '', 
+          mobile: '' 
+        }); // Reset form
         setOpen(false); // Close accordion after submission
-        loadPage(); // Optionally refresh data
+        loadPage(setData); // Pass setData to loadPage function
       })
       .catch(error => {
         alert('New user not added: ' + error.message);
       });
   };
 
+  // Filter data based on search term
+  const filteredData = data.filter((user) =>
+    user.fname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.lname?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Calculate paginated data
+  const startIndex = (page - 1) * rowsPerPage;
+  const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
     <ResponsiveDrawer>
+      <Box sx={{ 
+        maxWidth: '92vw',
+        overflowX: 'hidden'
+      }}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box sx={{
+              width: { xs: '100%', sm: '100%' },
+              mx: 'auto',
+              px: { xs: 1, sm: 2, md: 3 },
+            }}>
+              <Box>
+                <Box sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mb: 4,
+                  flexDirection: {sm: 'row' },
+                  gap: { xs: 2, sm: 0 }
+                }}>
+                  <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>
+                    <PeopleIcon /> Users
+                  </h1>
 
-      <h1> <PeopleIcon />
-        Users</h1>
-      <Box sx={{ mt: 4 }}>
-        <CollapsibleTable />
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center', mt: 5, fontWeight: 'bolder' }}>
-        ADD New Users
-        <ControlPointIcon
-          sx={{ cursor: 'pointer', fontSize: '50px', color: 'black' }}
-          onClick={() => setOpen(!open)} // Toggle accordion
-        />
-      </Box>
-      <Accordion expanded={open}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'black' }} />}>
-          <h2>Add Users Details</h2>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <FormControl variant="standard">
+                  <WhiteTextField
+                    placeholder="Search by name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    sx={{
+                      width: { xs: '100%', sm: '300px' },
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
 
-              <WhiteTextField
-                id="img"
-                name="img"
-                label="Image"
-                value={formData.img}
-                onChange={handleInputChange}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <WhiteTextField
-              id="fname"
-              name="fname"
-              label="First Name"
-              value={formData.fname}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="lname"
-              name="lname"
-              label="Last Name"
-              value={formData.lname}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="street"
-              name="street"
-              label="Street"
-              value={formData.street}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="role"
-              name="role" // Update this to match the 'role' property in formData
-              label="Status"
-              value={formData.role}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="user"
-              name="user"
-              label="User"
-              value={formData.user}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="age"
-              name="age"
-              label="Age"
-              value={formData.age}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="pass"
-              name="pass"
-              label="Password"
-              value={formData.pass}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="city"
-              name="city"
-              label="City"
-              value={formData.city}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="email"
-              name="email"
-              label="Email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-            <WhiteTextField
-              id="mobile"
-              name="mobile"
-              label="Mobile"
-              value={formData.mobile}
-              onChange={handleInputChange}
-            />
-            <StyledButton variant="contained" onClick={handleSubmit}>Submit</StyledButton>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+                <Box sx={{ 
+                  width: '100%',
+                  overflow: 'auto',
+                  '&::-webkit-scrollbar': {
+                    height: '8px'
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: '#888',
+                    borderRadius: '4px'
+                  }
+                }}>
+                  <TableContainer component={Paper} sx={{ 
+                    minWidth: 650,
+                    '@media (max-width: 600px)': {
+                      minWidth: 1000 // Forces horizontal scroll on small screens
+                    }
+                  }}>
+                    <Table aria-label="collapsible table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell />
+                          <TableCell>Name</TableCell>
+                          <TableCell>Status</TableCell>
+                          <TableCell>Email</TableCell>
+                          <TableCell>Address</TableCell>
+                          <TableCell>phone</TableCell>
+                          <TableCell>Edit</TableCell>
+                          <TableCell>Delete</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {paginatedData.map((val) => (
+                          <myContext.Provider value={val} key={'post' + val._id}>
+                            <Row 
+                              val={val} 
+                              loadPage={() => loadPage(setData)}
+                            />
+                          </myContext.Provider>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+
+                {filteredData.length > rowsPerPage && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <Pagination
+                      count={Math.ceil(filteredData.length / rowsPerPage)}
+                      page={page}
+                      onChange={handlePageChange}
+                      renderItem={(item) => (
+                        <PaginationItem
+                          slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                          {...item}
+                        />
+                      )}
+                    />
+                  </Box>
+                )}
+
+                <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center', mt: 5, fontWeight: 'bolder' }}>
+                  ADD New Users
+                  <ControlPointIcon
+                    sx={{ cursor: 'pointer', fontSize: '50px', color: 'black' }}
+                    onClick={() => setOpen(!open)} // Toggle accordion
+                  />
+                </Box>
+                <Accordion expanded={open}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'black' }} />}>
+                    <h2>Add Users Details</h2>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                      <FormControl variant="standard">
+
+                        <WhiteTextField
+                          id="img"
+                          name="img"
+                          label="Image"
+                          value={formData.img}
+                          onChange={handleInputChange}
+                          startAdornment={
+                            <InputAdornment position="start">
+                              <AccountCircle />
+                            </InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                      <WhiteTextField
+                        id="fname"
+                        name="fname"
+                        label="First Name"
+                        value={formData.fname}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="lname"
+                        name="lname"
+                        label="Last Name"
+                        value={formData.lname}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="street"
+                        name="street"
+                        label="Street"
+                        value={formData.street}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="role"
+                        name="role" // Update this to match the 'role' property in formData
+                        label="Status"
+                        value={formData.role}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="user"
+                        name="user"
+                        label="User"
+                        value={formData.user}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="age"
+                        name="age"
+                        label="Age"
+                        value={formData.age}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="pass"
+                        name="pass"
+                        label="Password"
+                        value={formData.pass}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="city"
+                        name="city"
+                        label="City"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="email"
+                        name="email"
+                        label="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                      />
+                      <WhiteTextField
+                        id="mobile"
+                        name="mobile"
+                        label="Mobile"
+                        value={formData.mobile}
+                        onChange={handleInputChange}
+                      />
+                      <StyledButton variant="contained" onClick={handleSubmit}>Submit</StyledButton>
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
     </ResponsiveDrawer>
   );
 }
 
-
-function CollapsibleTable() {
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 4;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('https://rosegoldgallery-back.onrender.com/api/user');
-      const result = await response.json();
-      setData(result);
-    };
-
-    fetchData();
-  }, []); // Fetch data only once when the component mounts
-
-  const handleChange = (event, value) => {
-    setPage(value); // Update the current page
-  };
-
-  // Calculate the start and end index for slicing the data
-  const startIndex = (page - 1) * rowsPerPage;
-  const paginatedData = data.slice(startIndex, startIndex + rowsPerPage); // Slice the data for the current page
-
-  return (
-    <>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>phone</TableCell>
-              <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell>
-
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {paginatedData.map((val) => (
-              <myContext.Provider value={val} key={'post' + val.id}>
-                <Row val={val} />
-              </myContext.Provider>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Pagination
-        count={Math.ceil(data.length / rowsPerPage)} // Calculate total pages
-        page={page}
-        onChange={handleChange}
-        renderItem={(item) => (
-          <PaginationItem
-            slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-            {...item}
-            sx={{ status: 'black' }}
-          />
-        )}
-      />
-    </>
-  );
-}
-
-
-
-function Row({ val }) {
+function Row({ val, loadPage }) {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newData, setNewData] = useState({ ...val }); // Initialize with current data
@@ -351,12 +412,22 @@ function Row({ val }) {
       return;
     }
     if (window.confirm('Are you sure you want to delete this user?')) {
-      myDel(val._id); // Call your reusable myDel function here
+      fetch(`https://rosegoldgallery-back.onrender.com/api/user/${val._id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert('Deleted successfully!');
+            loadPage(); // Refresh data after deletion
+          } else {
+            throw new Error('Failed to delete');
+          }
+        })
+        .catch((error) => {
+          alert('Error: ' + error.message);
+        });
     }
   };
-
-
-
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -377,13 +448,10 @@ function Row({ val }) {
         if (!res.ok) throw new Error('Update failed');
         alert('User updated successfully!');
         setIsEditing(false);
-        loadPage(); // Reloads the updated user list
+        loadPage(); // Refresh data after update
       })
       .catch((error) => alert('Error: ' + error.message));
   };
-
-
-
 
   return (
     <React.Fragment>
@@ -518,6 +586,7 @@ function Row({ val }) {
     </React.Fragment>
   );
 }
+
 const loadPage = (setData) => {
   fetch('https://rosegoldgallery-back.onrender.com/api/user')
     .then(res => {
@@ -533,30 +602,6 @@ const loadPage = (setData) => {
     .catch(error => {
       console.error('Error fetching data:', error);
       alert('Error fetching data: ' + error.message);
-    });
-};
-
-
-
-const myDel = (itemId) => {
-  if (!itemId) {
-    alert('Invalid ID');
-    return;
-  }
-
-  fetch(`https://rosegoldgallery-back.onrender.com/api/user/${itemId}`, {
-    method: 'DELETE',
-  })
-    .then((res) => {
-      if (res.ok) {
-        alert('Deleted successfully!');
-        loadPage(); // Refresh data after deletion
-      } else {
-        throw new Error('Failed to delete');
-      }
-    })
-    .catch((error) => {
-      alert('Error: ' + error.message);
     });
 };
 

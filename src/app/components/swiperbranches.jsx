@@ -1,82 +1,145 @@
 "use client"
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-
-
-import './styles.css';
+import React from "react";
+import Slider from "react-slick";
 import Image from 'next/image';
-// import required modules
-
 import a from '../components/img/wash.jpg'
 import b from '../components/img/sand.jpg'
 import c from '../components/img/san.jpeg'
 import d from '../components/img/new.jpg'
 import e from '../components/img/la.jpg'
 import f from '../components/img/alas.jpg'
-export default function App() {
+import '../globals.css'
+function Responsive() {
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
   return (
-    <>
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 50,
-          },
-        }}
-     
-        className="mySwiper"
-      >
-        <SwiperSlide>
-            <Image src={a} alt='img' className='image-hover2' />
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={b} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={c} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={d} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={e} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={f} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={b} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={c} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={d} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={e} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-        <SwiperSlide>
-             <Image src={f} alt='img' className='image-hover2'/>
-        </SwiperSlide>
-      </Swiper>
-    </>
+    <div className="slider-container">
+      <Slider {...settings}>
+        <div>
+        <Image src={a} alt='img' className='image-hover2 '  style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}  />
+        </div>
+        <div>
+           <Image 
+             src={b} 
+             alt='img' 
+             className='image-hover2' 
+             style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}
+           />
+        </div>
+        <div>
+          <Image src={c} alt='img' className='image-hover2 '  style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}  />
+        </div>
+        <div>
+          <Image src={d} alt='img' className='image-hover2 '  style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}  />
+        </div>
+        <div>
+          <Image src={e} alt='img' className='image-hover2 '  style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}  />
+        </div>
+        <div>
+           <Image src={f} alt='img' className='image-hover2 '  style={{
+               objectFit: 'cover',
+               width: '100%',
+               height: '250px'
+             }}  />
+        </div>
+       
+      </Slider>
+    </div>
   );
 }
+
+export default Responsive;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

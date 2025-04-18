@@ -60,7 +60,7 @@ const NecklacePage = () => {
   return (
     <div>
       <PrimarySearchAppBar />
-      <h1>Necklace</h1>
+      <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Necklace</h1>
       
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3%'}}>
         <div style={{ position: 'relative', width: '100%', height: '250px' }}>

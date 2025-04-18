@@ -125,7 +125,7 @@ export default function AdminLogin() {
           }}
         >
           <StyledForm onSubmit={formik.handleSubmit}>
-            <h1>Admin Login</h1>
+          <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Admin Login</h1>
             <label htmlFor="email">Email</label>
             <WhiteTextField
               id="email"

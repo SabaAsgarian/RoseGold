@@ -209,238 +209,254 @@ export default function EditOrder({ params }) {
   return (
     <div>
       <Header>
-        <Container maxWidth="md" sx={{ py: 4 }}>
-          <Paper sx={{ p: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-              <IconButton onClick={() => router.push('/components/admin/orders')} sx={{ mr: 2 }}>
-                <ArrowBackIcon />
-              </IconButton>
-              <Typography variant="h5">
-              Edit order#{order.trackingCode}
-              </Typography>
-            </Box>
+        <Box sx={{
+          maxWidth: '92vw',
+          overflowX: 'hidden'
+        }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Box sx={{
+                width: { xs: '100%', sm: '100%' },
+                mx: 'auto',
+                px: { xs: 1, sm: 2, md: 3 },
+              }}>
+                <Container maxWidth="md" sx={{ py: 4 }}>
+                  <Paper sx={{ p: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                      <IconButton onClick={() => router.push('/components/admin/orders')} sx={{ mr: 2 }}>
+                        <ArrowBackIcon />
+                      </IconButton>
+                      <Typography variant="h5">
+                        Edit order#{order.trackingCode}
+                      </Typography>
+                    </Box>
 
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>User's Name</TableCell>
-                    <TableCell>Tracking code. </TableCell>
-                    <TableCell>Total Price </TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Op</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <IconButton
-                        size="small"
-                        onClick={() => setExpanded(!expanded)}
-                      >
-                        {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                      </IconButton>
-                    </TableCell>
-                    <TableCell>
-                      {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'نامشخص'}
-                    </TableCell>
-                    <TableCell>{order.trackingCode}</TableCell>
-                    <TableCell>${order.totalAmount}</TableCell>
-                    <TableCell>
-                      {isEditing ? (
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                          <WhiteTextField
-                            select
-                            size="small"
-                            value={editedOrder.status}
-                            onChange={(e) => setEditedOrder({ ...editedOrder, status: e.target.value })}
-                            sx={{ minWidth: 150 }}
-                          >
-                            <MenuItem value="pending"> pending </MenuItem>
-                            <MenuItem value="processing"> processing </MenuItem>
-                            <MenuItem value="shipped">shipped </MenuItem>
-                            <MenuItem value="delivered">delivered  </MenuItem>
-                            <MenuItem value="completed">completed  </MenuItem>
-                            <MenuItem value="cancelled"> cancelled</MenuItem>
-                          </WhiteTextField>
-                          <IconButton onClick={handleSave} color="primary">
-                            <SaveIcon sx={{color:'black'}}/>
-                          </IconButton>
-                          <IconButton onClick={() => {
-                            setIsEditing(false);
-                            setEditedOrder(order);
-                          }}>
-                            <ArrowBackIcon sx={{color:'black'}} />
-                          </IconButton>
-                        </Box>
-                      ) : (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography>
-                            {order.status === 'pending' && 'pending  '}
-                            {order.status === 'processing' && 'processing  '}
-                            {order.status === 'shipped' && 'shipped '}
-                            {order.status === 'delivered' && 'delivered  '}
-                            {order.status === 'completed' && 'completed  '}
-                            {order.status === 'cancelled' && 'cancelled '}
-                          </Typography>
-                          <IconButton onClick={() => setIsEditing(true)}>
-                            <EditIcon sx={{color:'black'}} />
-                          </IconButton>
-                        </Box>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => router.push('/components/admin/orders')}>
-                        <ArrowBackIcon  sx={{color:'black'}}/>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
-                          <Typography variant="h6" gutterBottom component="div">
-                            جزئیات سفارش
-                          </Typography>
-                          <Grid container spacing={2}>
-                            <Grid item xs={12} md={6}>
-                              <Typography variant="subtitle2">تاریخ سفارش:</Typography>
-                              <Typography>
-                                {new Date(order.createdAt).toLocaleDateString('fa-IR')}
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                              <Typography variant="subtitle2">آدرس ارسال:</Typography>
+                    <TableContainer component={Paper}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell />
+                            <TableCell>User's Name</TableCell>
+                            <TableCell>Tracking code. </TableCell>
+                            <TableCell>Total Price </TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Op</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <IconButton
+                                size="small"
+                                onClick={() => setExpanded(!expanded)}
+                              >
+                                {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                              </IconButton>
+                            </TableCell>
+                            <TableCell>
+                              {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'نامشخص'}
+                            </TableCell>
+                            <TableCell>{order.trackingCode}</TableCell>
+                            <TableCell>${order.totalAmount}</TableCell>
+                            <TableCell>
                               {isEditing ? (
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                                   <WhiteTextField
-                                    label="شهر"
-                                    value={editedOrder.shippingAddress.city}
-                                    onChange={(e) => setEditedOrder({
-                                      ...editedOrder,
-                                      shippingAddress: {
-                                        ...editedOrder.shippingAddress,
-                                        city: e.target.value
-                                      }
-                                    })}
-                                  />
-                                  <WhiteTextField
-                                    label="آدرس"
-                                    value={editedOrder.shippingAddress.street}
-                                    onChange={(e) => setEditedOrder({
-                                      ...editedOrder,
-                                      shippingAddress: {
-                                        ...editedOrder.shippingAddress,
-                                        street: e.target.value
-                                      }
-                                    })}
-                                  />
+                                    select
+                                    size="small"
+                                    value={editedOrder.status}
+                                    onChange={(e) => setEditedOrder({ ...editedOrder, status: e.target.value })}
+                                    sx={{ minWidth: 150 }}
+                                  >
+                                    <MenuItem value="pending"> pending </MenuItem>
+                                    <MenuItem value="processing"> processing </MenuItem>
+                                    <MenuItem value="shipped">shipped </MenuItem>
+                                    <MenuItem value="delivered">delivered  </MenuItem>
+                                    <MenuItem value="completed">completed  </MenuItem>
+                                    <MenuItem value="cancelled"> cancelled</MenuItem>
+                                  </WhiteTextField>
+                                  <IconButton onClick={handleSave} color="primary">
+                                    <SaveIcon sx={{ color: 'black' }} />
+                                  </IconButton>
+                                  <IconButton onClick={() => {
+                                    setIsEditing(false);
+                                    setEditedOrder(order);
+                                  }}>
+                                    <ArrowBackIcon sx={{ color: 'black' }} />
+                                  </IconButton>
                                 </Box>
                               ) : (
-                                <Typography>
-                                  {order.shippingAddress.city} - {order.shippingAddress.street}
-                                </Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Typography>
+                                    {order.status === 'pending' && 'pending  '}
+                                    {order.status === 'processing' && 'processing  '}
+                                    {order.status === 'shipped' && 'shipped '}
+                                    {order.status === 'delivered' && 'delivered  '}
+                                    {order.status === 'completed' && 'completed  '}
+                                    {order.status === 'cancelled' && 'cancelled '}
+                                  </Typography>
+                                  <IconButton onClick={() => setIsEditing(true)}>
+                                    <EditIcon sx={{ color: 'black' }} />
+                                  </IconButton>
+                                </Box>
                               )}
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography variant="subtitle2">محصولات:</Typography>
-                              <Table size="small">
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell>نام محصول</TableCell>
-                                    <TableCell>تعداد</TableCell>
-                                    <TableCell>قیمت</TableCell>
-                                    <TableCell>تصویر</TableCell>
-                                    {isEditing && <TableCell>عملیات</TableCell>}
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {order.items.map((item, index) => (
-                                    <TableRow key={index}>
-                                      <TableCell>
-                                        {isEditing ? (
+                            </TableCell>
+                            <TableCell>
+                              <IconButton onClick={() => router.push('/components/admin/orders')}>
+                                <ArrowBackIcon sx={{ color: 'black' }} />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                <Box sx={{ margin: 1 }}>
+                                  <Typography variant="h6" gutterBottom component="div">
+                                    جزئیات سفارش
+                                  </Typography>
+                                  <Grid container spacing={2}>
+                                    <Grid item xs={12} md={6}>
+                                      <Typography variant="subtitle2">تاریخ سفارش:</Typography>
+                                      <Typography>
+                                        {new Date(order.createdAt).toLocaleDateString('fa-IR')}
+                                      </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                      <Typography variant="subtitle2">آدرس ارسال:</Typography>
+                                      {isEditing ? (
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                           <WhiteTextField
-                                            size="small"
-                                            value={editedOrder.items[index].name}
-                                            onChange={(e) => {
-                                              const newItems = [...editedOrder.items];
-                                              newItems[index] = { ...newItems[index], name: e.target.value };
-                                              setEditedOrder({ ...editedOrder, items: newItems });
-                                            }}
+                                            label="شهر"
+                                            value={editedOrder.shippingAddress.city}
+                                            onChange={(e) => setEditedOrder({
+                                              ...editedOrder,
+                                              shippingAddress: {
+                                                ...editedOrder.shippingAddress,
+                                                city: e.target.value
+                                              }
+                                            })}
                                           />
-                                        ) : (
-                                          item.name
-                                        )}
-                                      </TableCell>
-                                      <TableCell>
-                                        {isEditing ? (
                                           <WhiteTextField
-                                            type="number"
-                                            size="small"
-                                            value={editedOrder.items[index].quantity}
-                                            onChange={(e) => {
-                                              const newItems = [...editedOrder.items];
-                                              newItems[index] = { ...newItems[index], quantity: parseInt(e.target.value) };
-                                              setEditedOrder({ ...editedOrder, items: newItems });
-                                            }}
+                                            label="آدرس"
+                                            value={editedOrder.shippingAddress.street}
+                                            onChange={(e) => setEditedOrder({
+                                              ...editedOrder,
+                                              shippingAddress: {
+                                                ...editedOrder.shippingAddress,
+                                                street: e.target.value
+                                              }
+                                            })}
                                           />
-                                        ) : (
-                                          item.quantity
-                                        )}
-                                      </TableCell>
-                                      <TableCell>
-                                        {isEditing ? (
-                                          <WhiteTextField
-                                            type="number"
-                                            size="small"
-                                            value={editedOrder.items[index].price}
-                                            onChange={(e) => {
-                                              const newItems = [...editedOrder.items];
-                                              newItems[index] = { ...newItems[index], price: parseInt(e.target.value) };
-                                              setEditedOrder({ ...editedOrder, items: newItems });
-                                            }}
-                                          />
-                                        ) : (
-                                          `$${item.price}`
-                                        )}
-                                      </TableCell>
-                                      <TableCell>
-                                        <img 
-                                          src={`https://rosegoldgallery-back.onrender.com/${item.img}`} 
-                                          alt={item.name}
-                                          style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                                        />
-                                      </TableCell>
-                                      {isEditing && (
-                                        <TableCell>
-                                          <IconButton
-                                            color="error"
-                                            onClick={() => {
-                                              const newItems = editedOrder.items.filter((_, i) => i !== index);
-                                              setEditedOrder({ ...editedOrder, items: newItems });
-                                            }}
-                                          >
-                                            <DeleteOutlineIcon />
-                                          </IconButton>
-                                        </TableCell>
+                                        </Box>
+                                      ) : (
+                                        <Typography>
+                                          {order.shippingAddress.city} - {order.shippingAddress.street}
+                                        </Typography>
                                       )}
-                                    </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Collapse>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Container>
-      </Header>
-    </div>
-  );
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                      <Typography variant="subtitle2">محصولات:</Typography>
+                                      <Table size="small">
+                                        <TableHead>
+                                          <TableRow>
+                                            <TableCell>نام محصول</TableCell>
+                                            <TableCell>تعداد</TableCell>
+                                            <TableCell>قیمت</TableCell>
+                                            <TableCell>تصویر</TableCell>
+                                            {isEditing && <TableCell>عملیات</TableCell>}
+                                          </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                          {order.items.map((item, index) => (
+                                            <TableRow key={index}>
+                                              <TableCell>
+                                                {isEditing ? (
+                                                  <WhiteTextField
+                                                    size="small"
+                                                    value={editedOrder.items[index].name}
+                                                    onChange={(e) => {
+                                                      const newItems = [...editedOrder.items];
+                                                      newItems[index] = { ...newItems[index], name: e.target.value };
+                                                      setEditedOrder({ ...editedOrder, items: newItems });
+                                                    }}
+                                                  />
+                                                ) : (
+                                                  item.name
+                                                )}
+                                              </TableCell>
+                                              <TableCell>
+                                                {isEditing ? (
+                                                  <WhiteTextField
+                                                    type="number"
+                                                    size="small"
+                                                    value={editedOrder.items[index].quantity}
+                                                    onChange={(e) => {
+                                                      const newItems = [...editedOrder.items];
+                                                      newItems[index] = { ...newItems[index], quantity: parseInt(e.target.value) };
+                                                      setEditedOrder({ ...editedOrder, items: newItems });
+                                                    }}
+                                                  />
+                                                ) : (
+                                                  item.quantity
+                                                )}
+                                              </TableCell>
+                                              <TableCell>
+                                                {isEditing ? (
+                                                  <WhiteTextField
+                                                    type="number"
+                                                    size="small"
+                                                    value={editedOrder.items[index].price}
+                                                    onChange={(e) => {
+                                                      const newItems = [...editedOrder.items];
+                                                      newItems[index] = { ...newItems[index], price: parseInt(e.target.value) };
+                                                      setEditedOrder({ ...editedOrder, items: newItems });
+                                                    }}
+                                                  />
+                                                ) : (
+                                                  `$${item.price}`
+                                                )}
+                                              </TableCell>
+                                              <TableCell>
+                                                <img
+                                                  src={`https://rosegoldgallery-back.onrender.com/${item.img}`}
+                                                  alt={item.name}
+                                                  style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                                />
+                                              </TableCell>
+                                              {isEditing && (
+                                                <TableCell>
+                                                  <IconButton
+                                                    color="error"
+                                                    onClick={() => {
+                                                      const newItems = editedOrder.items.filter((_, i) => i !== index);
+                                                      setEditedOrder({ ...editedOrder, items: newItems });
+                                                    }}
+                                                  >
+                                                    <DeleteOutlineIcon />
+                                                  </IconButton>
+                                                </TableCell>
+                                              )}
+                                            </TableRow>
+                                          ))}
+                                        </TableBody>
+                                      </Table>
+                                    </Grid>
+                                  </Grid>
+                                </Box>
+                              </Collapse>
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Paper>
+                </Container>
+                </Box>
+            </Grid>
+          </Grid>
+        </Box>
+     
+              </Header>
+            </div>
+            );
 } 

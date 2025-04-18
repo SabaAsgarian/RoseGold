@@ -2,35 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
 
 .menuHover {
   color: black !important;
@@ -40,3 +12,49 @@ body {
 .menuHover:hover {
   color: #ccaf71;
 }
+.firstt{
+  background-color: #faf7f1;
+  mix-blend-mode: multiply;
+}
+.secondd{
+  background-color: #faf7f1;
+  mix-blend-mode: multiply;
+}
+.firstt{
+  background-color: #faf7f1;
+  mix-blend-mode: multiply;
+  .secondd{
+    background-color: #faf7f1;
+    mix-blend-mode: multiply;
+  }
+}
+.slick-slide {
+  padding: 0 15px;  /* Adjust this value to control gap size */
+}
+
+.slick-list {
+  margin: 0 -15px;  /* Should match padding value above */
+}
+
+/* Optional: if you want to prevent content shrinking */
+.slick-slide > div {
+  height: 100%;
+}
+
+/* If you're using cards, add this to maintain card size */
+.slick-slide > div > div {
+  height: 100%;
+}
+.image-hover:hover {
+  filter: brightness(70%); /* Decrease brightness on hover */
+  
+}
+.image-hover2:hover {
+  filter: brightness(25%); /* Decrease brightness on hover */
+  
+}
+.p-hover:hover {
+  border-bottom: 1px solid black;
+  color: rgb(74, 74, 74);
+  /* Add border on hover */
+  }

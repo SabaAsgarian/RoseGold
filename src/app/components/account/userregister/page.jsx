@@ -177,7 +177,7 @@ export default function UserRegister() {
   return (
     <>
     <Header/>
-    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '5% auto' }}>
+    <Box style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '60%', margin: '2% auto' }}>
        <CustomizedBreadcrumbs/>
       </Box>
     <Container maxWidth="2xl" sx={{
@@ -195,12 +195,12 @@ export default function UserRegister() {
         justifyContent: "center",
         alignItems: "center",
         borderRadius: "10px",
-        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.75)",
+        boxShadow: "0px 0px 10px 2px rgba(0, 0, 0, 0.75)",
         py: 4
       }}>
         <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <StyledForm onSubmit={formik.handleSubmit}>
-            <h1>Register</h1>
+          <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Register</h1>
 
             {/* Image upload section */}
             <Box sx={{ textAlign: 'center', mb: 2 }}>

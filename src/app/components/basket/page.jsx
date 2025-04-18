@@ -114,13 +114,14 @@ export default function CartPage() {
   return (
     <>
       <PrimarySearchAppBar />
+      <h1 style={{ textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Cart</h1>
       <Box
         style={{
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
           width: "60%",
-          margin: "5% auto",
+          margin: "1.5% auto",
         }}
       >
         <CustomizedBreadcrumbs />
@@ -199,7 +200,7 @@ export default function CartPage() {
             ))}
           </TableBody>
         </Table>
-        <h3>- Total Price Of Your Shopping Is: {num}$</h3>
+        <h3 style={{ textAlign: 'start', marginTop: '5%',marginBottom:'5%' ,fontSize:'20px',fontWeight:'bold'}}>- Total Price Of Your Shopping Is: {num}$</h3>
 
         {orderSuccess ? (
           <h3 style={{ color: "green", textAlign: "center" }}>

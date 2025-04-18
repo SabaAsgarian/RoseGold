@@ -11,6 +11,7 @@ import MultiActionAreaCard from '../../card';
 const StyledButton = styled(Button)({
     backgroundColor: '#a9dfd8',
     color: 'black',
+    
     '&:hover': {
         backgroundColor: '#8fcfc8',
     },
@@ -29,7 +30,7 @@ export default function ManageProducts() {
         <div>
             <Drawerr>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-           <h1><InventoryIcon/>Managing Products </h1>
+            <h1 style={{ textAlign: 'start', fontSize:'32px',fontWeight:'bold'}}><InventoryIcon/>Managing Products </h1>
            <StyledButton>
            <a href="/components/admin/add-product"><AddCircleOutlineIcon/>Add New Product  </a>
            </StyledButton>

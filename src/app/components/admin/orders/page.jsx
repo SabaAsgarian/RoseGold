@@ -12,7 +12,9 @@ import {
   TableHead,
   TableRow,
   CircularProgress,
-  IconButton
+  IconButton,
+  Grid,
+  Box
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import Header from "../adminUI/Drawer";
@@ -119,67 +121,85 @@ export default function Orders() {
 
 
 
+  
   return (
     <div>
+
       <Header>
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h5" gutterBottom>
-              Managing Orders
-            </Typography>
+        <Box sx={{
+          maxWidth: '92vw',
+          overflowX: 'hidden'
+        }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Box sx={{
+                width: { xs: '100%', sm: '100%' },
+                mx: 'auto',
+                px: { xs: 1, sm: 2, md: 3 },
+              }}>
+                <Container maxWidth="lg" sx={{ py: 4 }}>
+                  <Paper sx={{ p: 3 }}>
+                    <Typography variant="h5" gutterBottom>
+                      Managing Orders
+                    </Typography>
 
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Tracking code </TableCell>
-                    <TableCell>User's Name </TableCell>
-                    <TableCell>Products</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Shipping address </TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Register Time </TableCell>
-                    <TableCell>op</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orders.map((order) => (
-                    <TableRow key={order._id}>
-                      <TableCell>{order.trackingCode}</TableCell>
-                      <TableCell>
-                        {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'نامشخص'}
-                      </TableCell>
-                      <TableCell>
-                        {order.items.map((item) => (
-                          <div key={item.id}>
-                            {item.name || 'Unknown Product'} (x{item.quantity})
-                          </div>
-                        ))}
-                      </TableCell>
+                    <TableContainer>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Tracking code </TableCell>
+                            <TableCell>User's Name </TableCell>
+                            <TableCell>Products</TableCell>
+                            <TableCell>Price</TableCell>
+                            <TableCell>Shipping address </TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Register Time </TableCell>
+                            <TableCell>op</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {orders.map((order) => (
+                            <TableRow key={order._id}>
+                              <TableCell>{order.trackingCode}</TableCell>
+                              <TableCell>
+                                {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'نامشخص'}
+                              </TableCell>
+                              <TableCell>
+                                {order.items.map((item) => (
+                                  <div key={item.id}>
+                                    {item.name || 'Unknown Product'} (x{item.quantity})
+                                  </div>
+                                ))}
+                              </TableCell>
 
-                      <TableCell>${order.totalAmount}</TableCell>
-                      <TableCell>
-                        {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.street}` : "Address not available"}
-                      </TableCell>
+                              <TableCell>${order.totalAmount}</TableCell>
+                              <TableCell>
+                                {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.street}` : "Address not available"}
+                              </TableCell>
 
-                      <TableCell>{order.status}</TableCell>
-                      <TableCell>{new Date(order.createdAt).toLocaleString()}</TableCell>
-                      <TableCell>
-                        <IconButton color="primary" onClick={() => router.push(`/components/admin/orders/edit/${order._id}`)}>
-                          <Edit sx={{ color: 'black' }} />
-                        </IconButton>
-                        <IconButton color="error" onClick={() => handleDelete(order._id)}>
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Container>
-      </Header>
-    </div>
+                              <TableCell>{order.status}</TableCell>
+                              <TableCell>{new Date(order.createdAt).toLocaleString()}</TableCell>
+                              <TableCell>
+                                <IconButton color="primary" onClick={() => router.push(`/components/admin/orders/edit/${order._id}`)}>
+                                  <Edit sx={{ color: 'black' }} />
+                                </IconButton>
+                                <IconButton color="error" onClick={() => handleDelete(order._id)}>
+                                  <Delete />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Paper>
+                </Container>
+                </Box>
+            </Grid>
+          </Grid>
+        </Box>
+     
+    </Header>
+    </div >
   );
 }

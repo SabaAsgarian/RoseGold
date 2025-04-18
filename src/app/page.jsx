@@ -25,7 +25,7 @@ export default function Page() {
       <PrimarySearchAppBar /> {/* Moved to the top */}
       <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ width: '100%', height: '100%' }}>
-          <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
+          <Link href="./components/shop" style={{ color: 'black',  textDecoration: 'none' }}>
             <Image src={gif} alt="GIF" style={{ width: '100%', height: 'auto' }} /> {/* Full width GIF */}
           </Link>
         </Box>
@@ -414,7 +414,9 @@ export default function Page() {
           </Box>
         </Link>
       </Box>
-      <Swiper />
+     <Box sx={{marginTop:'6%'}}>
+     <Swiper />
+     </Box>
       {/* g//////////////////////////////////////////////////////// */}
       <Grid container spacing={0} sx={{ marginTop: '10%', backgroundColor: '#faf7ef' }} className='Last'>
         <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -456,15 +458,15 @@ export default function Page() {
                 paddingBottom: '10%'
               }}
             >
-              <h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'start' }} className='h1 w-full'>We Design Gold Differently</h1> {/* Updated text alignment */}
-              <Box style={{ textAlign: 'start', marginLeft: '0', width: '100%' }}>
-                <p className='p' style={{ width: '70%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
+              <h1 style={{width:'100%', fontSize: '32px', fontWeight: 'bolder', textAlign: 'start' }} className='h1 w-full'>We Design Gold Differently</h1> {/* Updated text alignment */}
+              <Box style={{ textAlign: 'start', marginLeft: '0', width: '80%' }}>
+                <p className='p' style={{ width: '70%',fontSize:'16px',marginTop:'12%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
               </Box>
-              <Box className='listt' style={{ textAlign: 'start', marginLeft: '0' }}> {/* Updated text alignment */}
-                <p style={{ fontWeight: 'bolder', width: '100%' }}>High commitment</p>
-                <p style={{ fontWeight: 'bolder', width: '100%' }}>Innovation in design</p>
-                <p style={{ fontWeight: 'bolder', width: '100%' }}>24 hour response</p>
-                <p style={{ fontWeight: 'bolder', width: '100%' }}>sustainability</p>
+              <Box className='listt' style={{ textAlign: 'start', marginLeft: '0',marginTop:'10%' }}> {/* Updated text alignment */}
+                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>High commitment</p>
+                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>Innovation in design</p>
+                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>24 hour response</p>
+                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>sustainability</p>
               </Box>
             </Box>
             <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
@@ -549,16 +551,14 @@ export default function Page() {
       </Box>
       {/* jhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh */}
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '5%', marginLeft: '3%' }}>
-        <Box sx={{ fontWeight: 'bold', color: 'black', marginBottom: 5, fontSize: '25px' }}>
+        <Box sx={{ fontWeight: 'bold', color: 'black', marginBottom: "5%", fontSize: '25px' }}>
           Our Branches
         </Box>
 
       </Box>
       <Swiperbranches style={{ marginBottom: '5%', marginTop: '5%' }} />
       {/* f///////////////////last///////////////////////////// */}
-      <Box sx={{ margin: '20%' }}>
-
-      </Box>
+      
       <Footer />
     </>
   )

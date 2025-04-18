@@ -112,7 +112,7 @@ const AppBar = styled(MuiAppBar)(({ theme }) => ({
   backgroundColor: 'white', // Set background color to white
   color: 'black',
   borderBottom: '1px solid black',
-  boxShadow: '0' , // Change to static
+  boxShadow: '0px' , // Change to static
   '&:hover': {
     color: '#ccaf71',
   },
@@ -144,6 +144,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
   color: 'black',
   margin: '0 10px',
   textDecoration: 'none',
+  
   transition: 'color 0.3s ease',
   '&:hover': {
     color: '#ccaf71',
