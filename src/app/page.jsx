@@ -459,8 +459,8 @@ export default function Page() {
               }}
             >
               <h1 style={{width:'100%', fontSize: '32px', fontWeight: 'bolder', textAlign: 'start' }} className='h1 w-full'>We Design Gold Differently</h1> {/* Updated text alignment */}
-              <Box style={{ textAlign: 'start', marginLeft: '0', width: '80%' }}>
-                <p className='p' style={{ width: '70%',fontSize:'16px',marginTop:'12%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
+              <Box style={{ textAlign: 'start', marginLeft: '0', width: '100%' }}>
+                <p className='p' style={{ width: '60%',fontSize:'16px',marginTop:'12%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
               </Box>
               <Box className='listt' style={{ textAlign: 'start', marginLeft: '0',marginTop:'10%' }}> {/* Updated text alignment */}
                 <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>High commitment</p>
