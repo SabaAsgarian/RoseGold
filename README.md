@@ -26,14 +26,30 @@
 
 
 ![d](https://github.com/user-attachments/assets/11c13f25-8106-4203-9369-0d2bec63b137)
-![sign](https://github.com/user-attachments/assets/cd7e7e64-b056-4df0-9917-7e3e939f6039)
-![signup](https://github.com/user-attachments/assets/e8debe21-1d94-4ecc-b077-509aba14192f)
-![signin](https://github.com/user-attachments/assets/35a7f79a-e8aa-4dad-a948-723a355c22f1)
-![pay](https://github.com/user-attachments/assets/38f901ad-3eba-4250-9fa7-b571bb1e1909)
 
-![e](https://github.com/user-attachments/assets/ec06f35d-49de-43e9-b46c-30d8168110c6)
-![f](https://github.com/user-attachments/assets/3e8e2fa5-7b6a-413b-8218-acd19ecba35f)
-![acc](https://github.com/user-attachments/assets/74f000dc-7968-4c1a-83a0-8c2567c48d4b)
+
+![Image](https://github.com/user-attachments/assets/565bced0-2e80-46b4-af2a-645e9f415b64)
+
+![Image](https://github.com/user-attachments/assets/2cc78f23-dc1f-488a-991e-108d28fcfe4c)
+
+![Image](https://github.com/user-attachments/assets/23e0a876-75df-4e3f-9387-2e89ec98db0c)
+
+![Image](https://github.com/user-attachments/assets/bd29d04e-7d6a-43ec-8408-a84363ed1c6f)
+
+![Image](https://github.com/user-attachments/assets/9ec0524a-573c-4072-8213-f61392a19610)
+
+![Image](https://github.com/user-attachments/assets/2353b820-5317-4c98-9ad9-63527f3a1ea1)
+
+![Image](https://github.com/user-attachments/assets/0e3b2356-7b83-4337-bb65-c6dda928c4ba)
+
+![Image](https://github.com/user-attachments/assets/f95b17a2-9e69-460c-a706-a0df8fdccfa0)
+
+![Image](https://github.com/user-attachments/assets/99b71a60-87ab-472d-b17f-0d1be7d3b776)
+
+![Image](https://github.com/user-attachments/assets/2c030d15-2e9e-4b30-9e66-5f1bf9ae4bfb)
+
+![Image](https://github.com/user-attachments/assets/6bf3ec91-a356-4850-a9da-e10d9c798773)
+
 
 ## Environment Variables
 
