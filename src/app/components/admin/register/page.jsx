@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { styled } from '@mui/material/styles';
 import { TextField, Button, Box, Container, Typography } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Link from "next/link";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const StyledForm = styled('form')({
     display: 'flex',
     flexDirection: 'column',
@@ -43,7 +45,8 @@ const StyledButton = styled(Button)({
 });
 export default function AdminRegister() {
     const router = useRouter();
-
+    const [showpass, setShowpass] = useState(true)
+    const showic = useRef()
 
     const formik = useFormik({
         initialValues: {
@@ -84,18 +87,29 @@ export default function AdminRegister() {
             }
         },
     });
+    const show = () => {
+        if (!showic.current) return;
 
+        if (showpass) {
+            showic.current.children[0].style.display = 'flex';
+            showic.current.children[1].style.display = 'none';
+        } else {
+            showic.current.children[0].style.display = 'none';
+            showic.current.children[1].style.display = 'flex';
+        }
+        setShowpass(!showpass);
+    }
     return (
         <div>
             <Container maxWidth='2xl' sx={{ backgroundColor: '#f2f4f8', minHeight: '150vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Container className='container' maxWidth="sm" sx={{ backgroundColor: '#ffffff', minHeight: '60vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.75)',marginTop:'5%',marginBottom:'10%' }}>
+                <Container className='container' maxWidth="sm" sx={{ backgroundColor: '#ffffff', minHeight: '60vh', maxHeight: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '10px', boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.75)', marginTop: '5%', marginBottom: '10%' }}>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <h1 style={{width:'50%', textAlign: 'start', marginTop: '2rem' ,fontSize:'32px',fontWeight:'bold'}}>Admin Register</h1>
+                        <h1 style={{ width: '50%', textAlign: 'start', marginTop: '2rem', fontSize: '32px', fontWeight: 'bold' }}>Admin Register</h1>
                         <form onSubmit={formik.handleSubmit}>
                             {/* First Name */}
 
                             <div>
-                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                <Box sx={{ marginBottom: '10%', marginTop: '10%' }}>
                                     <label className="font-loginform" htmlFor="fname">First Name:</label>
                                 </Box>
                                 <WhiteTextField
@@ -122,7 +136,7 @@ export default function AdminRegister() {
 
                             {/* Last Name */}
                             <div>
-                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                <Box sx={{ marginBottom: '10%', marginTop: '10%' }}>
                                     <label className="font-loginform" htmlFor="lname">Last Name:</label>
                                 </Box>
                                 <WhiteTextField
@@ -149,7 +163,7 @@ export default function AdminRegister() {
 
                             {/* Email */}
                             <div>
-                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                <Box sx={{ marginBottom: '10%', marginTop: '10%' }}>
                                     <label className="font-loginform" htmlFor="email">Email:</label>
                                 </Box>
                                 <WhiteTextField
@@ -176,14 +190,14 @@ export default function AdminRegister() {
 
                             {/* Password */}
                             <div>
-                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                <Box sx={{ marginBottom: '10%', marginTop: '10%' }}>
                                     <label className="font-loginform" htmlFor="pass">Password:</label>
                                 </Box>
                                 <WhiteTextField
                                     className="w-full bg-[#F8F9FA] font-text border-b outline-none h-[45px] placeholder:font-loginform3"
                                     id="pass"
                                     name="pass"
-                                    type="password"
+                                    type={showpass ? "password" : "text"}
                                     placeholder="Enter Your Password"
                                     autoComplete="on"
                                     onChange={formik.handleChange}
@@ -192,6 +206,10 @@ export default function AdminRegister() {
                                     error={formik.touched.pass && Boolean(formik.errors.pass)}
                                     helperText={formik.touched.pass && formik.errors.pass}
                                 />
+                                <div onClick={show} ref={showic} className='mt-[10%] mb-[10%]  w-[10%] *:absolute relative flex justify-center cursor-pointer items-center'>
+                                    <span style={{ display: 'none' }} className='justify-center items-center w-full'><VisibilityIcon /></span>
+                                    <span style={{ display: 'flex' }} className='justify-center items-center w-full'><VisibilityOffIcon /></span>
+                                </div>
                                 {formik.touched.pass && formik.errors.pass && (
                                     <div className="w-full flex justify-start items-center">
                                         <p className="font-loginh2 text-sm text-red-500">
@@ -203,7 +221,7 @@ export default function AdminRegister() {
 
                             {/* Role */}
                             <div>
-                                <Box sx={{marginBottom:'10%',marginTop:'10%'}}>
+                                <Box sx={{ marginBottom: '10%', marginTop: '10%' }}>
                                     <label className="font-loginform" htmlFor="role">Role:</label>
                                 </Box>
                                 <WhiteTextField
@@ -224,7 +242,7 @@ export default function AdminRegister() {
                             <Box sx={{ marginTop: '10%' }}>
                                 <StyledButton type="submit">Submit</StyledButton>
                             </Box>
-                            <Box sx={{ display: 'flex',marginTop:'10%',marginBottom:'10%' }}>
+                            <Box sx={{ display: 'flex', marginTop: '10%', marginBottom: '10%' }}>
                                 <Typography>
                                     Already Have Admin Account?
                                 </Typography>
@@ -233,11 +251,11 @@ export default function AdminRegister() {
                                 </Link>
                             </Box>
                         </form>
-                        <Box sx={{width:'100%',marginTop:'10%',marginBottom:'10%'}}>
-         <Link href="/">
-              <StyledButton sx={{width:'100%'}}>Main Site</StyledButton>
-            </Link>
-         </Box>
+                        <Box sx={{ width: '100%', marginTop: '10%', marginBottom: '10%' }}>
+                            <Link href="/">
+                                <StyledButton sx={{ width: '100%' }}>Main Site</StyledButton>
+                            </Link>
+                        </Box>
                     </Box>
                 </Container>
             </Container>

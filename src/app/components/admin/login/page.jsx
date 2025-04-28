@@ -2,11 +2,13 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { styled } from "@mui/material/styles";
-import { TextField, Button, Box, Container, Typography } from "@mui/material";
+import { TextField, Button, Box, Container, Typography, Backdrop, CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Link from "next/link";
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useRef, useState } from "react";
 // Styled components
 const StyledForm = styled("form")({
   display: "flex",
@@ -48,7 +50,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://rosegoldgallery
 
 export default function AdminLogin() {
   const router = useRouter();
-
+  const [showpass, setShowpass] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const showic = useRef()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -60,6 +64,7 @@ export default function AdminLogin() {
     }),
     onSubmit: async (values) => {
       try {
+        setIsLoading(true);
         console.log("Attempting admin login...");
         const res = await fetch(`${API_BASE_URL}/api/admin/login`, {
           method: "POST",
@@ -89,10 +94,23 @@ export default function AdminLogin() {
       } catch (error) {
         console.error("Error during login:", error);
         alert("An unexpected error occurred. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
     },
   });
-
+  const show = () => {
+    if (!showic.current) return;
+    
+    if (showpass) {
+        showic.current.children[0].style.display = 'flex';
+        showic.current.children[1].style.display = 'none';
+    } else {
+        showic.current.children[0].style.display = 'none';
+        showic.current.children[1].style.display = 'flex';
+    }
+    setShowpass(!showpass);
+  }
   return (
     <Container
       maxWidth="2xl"
@@ -104,6 +122,20 @@ export default function AdminLogin() {
         alignItems: "center",
       }}
     >
+      <Backdrop
+        sx={{ 
+          color: 'black', 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center', 
+        }}
+        open={isLoading}
+      >
+        <p>Loading...</p>
+        <CircularProgress color="black" />
+      </Backdrop>
       <Container
         maxWidth="sm"
         sx={{
@@ -150,7 +182,7 @@ export default function AdminLogin() {
             <WhiteTextField
               id="pass"
               name="pass"
-              type="password"
+              type={showpass ? "password" : "text"}
               placeholder="Enter Your Password"
               autoComplete="off"
               onChange={formik.handleChange}
@@ -159,6 +191,10 @@ export default function AdminLogin() {
               error={formik.touched.pass && Boolean(formik.errors.pass)}
               helperText={formik.touched.pass && formik.errors.pass}
             />
+             <div onClick={show} ref={showic} className='mt-[10%] mb-[10%]  w-[10%] *:absolute relative flex justify-center cursor-pointer items-center'>
+                <span style={{ display: 'none' }} className='justify-center items-center w-full'><VisibilityIcon /></span>
+                <span style={{ display: 'flex' }} className='justify-center items-center w-full'><VisibilityOffIcon /></span>
+              </div>
             {formik.touched.pass && formik.errors.pass && (
               <p className="text-sm text-red-500">
                 <ErrorOutlineIcon className="text-lg text-red-500" />{" "}

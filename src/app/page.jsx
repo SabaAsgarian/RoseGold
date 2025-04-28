@@ -1,11 +1,11 @@
 "use client"
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link'
 import Image from 'next/image'
-import gif from './components/img/vid.gif'
+import gif from '../../public/vid.gif'
 import rin from './components/img/rin.jpg'
 import nec from './components/img/neck.jpg'
 import brac from './components/img/brac.jpg'
@@ -18,15 +18,40 @@ import last from './components/img/last.webp'
 import AssignmentReturnedOutlinedIcon from '@mui/icons-material/AssignmentReturnedOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import Footer from './components/footer'
-import Swiperbranches from './components/swiperbranches'
+import Swiperbranches from './components/swiperbranches';
+
 export default function Page() {
+  const [showVideo, setShowVideo] = useState(false);
+
+  const handleGifError = () => {
+    setShowVideo(true);
+  };
+
   return (
     <>
-      <PrimarySearchAppBar /> {/* Moved to the top */}
+      <PrimarySearchAppBar />
       <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ width: '100%', height: '100%' }}>
-          <Link href="./components/shop" style={{ color: 'black',  textDecoration: 'none' }}>
-            <Image src={gif} alt="GIF" style={{ width: '100%', height: 'auto' }} /> {/* Full width GIF */}
+          <Link href="./components/shop" style={{ color: 'black', textDecoration: 'none' }}>
+            {showVideo ? (
+              <video
+                src="/videos/vidd.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                preload="auto"
+              />
+            ) : (
+              <Image 
+                src={gif} 
+                alt="GIF" 
+                style={{ width: '100%', height: 'auto' }}
+                onError={handleGifError}
+                priority
+              />
+            )}
           </Link>
         </Box>
 
@@ -414,9 +439,9 @@ export default function Page() {
           </Box>
         </Link>
       </Box>
-     <Box sx={{marginTop:'6%'}}>
-     <Swiper />
-     </Box>
+      <Box sx={{ marginTop: '6%' }}>
+        <Swiper />
+      </Box>
       {/* g//////////////////////////////////////////////////////// */}
       <Grid container spacing={0} sx={{ marginTop: '10%', backgroundColor: '#faf7ef' }} className='Last'>
         <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -459,14 +484,14 @@ export default function Page() {
               }}
             >
               <h1 style={{width:'100%', fontSize: '32px', fontWeight: 'bolder', textAlign: 'start' }} className='h1 w-full'>We Design Gold Differently</h1> {/* Updated text alignment */}
-              <Box style={{ textAlign: 'start', marginLeft: '0', width: '80%' }}>
-                <p className='p' style={{ width: '70%',fontSize:'16px',marginTop:'12%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
+              <Box style={{ textAlign: 'start', marginLeft: '0', width: '100%' }}>
+                <p className='p' style={{ width: '60%',fontSize:'16px',marginTop:'12%' }}>Because beautiful jewelry is an expression of yourself: wear what you want, how you want, or celebrate whenever you want, and keep it forever. These products are for your big moments and everyday use.</p>
               </Box>
-              <Box className='listt' style={{ textAlign: 'start', marginLeft: '0',marginTop:'10%' }}> {/* Updated text alignment */}
-                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>High commitment</p>
-                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>Innovation in design</p>
-                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>24 hour response</p>
-                <p style={{ fontWeight: 'bolder', width: '100%',fontSize:'16px' }}>sustainability</p>
+              <Box className='listt' style={{ textAlign: 'start', marginLeft: '0', marginTop: '10%' }}> {/* Updated text alignment */}
+                <p style={{ fontWeight: 'bolder', width: '100%', fontSize: '16px' }}>High commitment</p>
+                <p style={{ fontWeight: 'bolder', width: '100%', fontSize: '16px' }}>Innovation in design</p>
+                <p style={{ fontWeight: 'bolder', width: '100%', fontSize: '16px' }}>24 hour response</p>
+                <p style={{ fontWeight: 'bolder', width: '100%', fontSize: '16px' }}>sustainability</p>
               </Box>
             </Box>
             <Link href="./components/shop" style={{ color: 'black', margin: '0 10px', textDecoration: 'none' }}>
@@ -517,7 +542,7 @@ export default function Page() {
                 position: 'relative',
                 width: '100%',
                 aspectRatio: '16 / 16', // یا هر نسبت تصویری مناسب
-              
+
                 cursor: 'pointer',
                 bgcolor: '#faf7ef',
                 color: 'black'
@@ -558,7 +583,7 @@ export default function Page() {
       </Box>
       <Swiperbranches style={{ marginBottom: '5%', marginTop: '5%' }} />
       {/* f///////////////////last///////////////////////////// */}
-      
+
       <Footer />
     </>
   )

@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Link from "next/link";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import React from "react";
+import React, { useRef, useState } from "react";
 import Header from '../headerAcc';
 import Footer from '../footerAcc';
-import CustomizedBreadcrumbs from '../bradcrumbsAcc'
+import CustomizedBreadcrumbs from '../bradcrumbsAcc';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const StyledForm = styled("form")({
   display: "flex",
   flexDirection: "column",
@@ -64,7 +66,8 @@ const VisuallyHiddenInput = styled('input')({
 export default function UserRegister() {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = React.useState(null);
-
+  const [showpass, setShowpass] = useState(true)
+  const showic = useRef()
   const formik = useFormik({
     initialValues: {
       fname: "",
@@ -161,7 +164,18 @@ export default function UserRegister() {
       }
     },
   });
-
+  const show = () => {
+    if (!showic.current) return;
+    
+    if (showpass) {
+        showic.current.children[0].style.display = 'flex';
+        showic.current.children[1].style.display = 'none';
+    } else {
+        showic.current.children[0].style.display = 'none';
+        showic.current.children[1].style.display = 'flex';
+    }
+    setShowpass(!showpass);
+  }
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -300,13 +314,16 @@ export default function UserRegister() {
             <WhiteTextField
               id="pass"
               name="pass"
-              type="password"
+              type={showpass ? "password" : "text"}
               placeholder="Enter Your Password"
               {...formik.getFieldProps('pass')}
               error={formik.touched.pass && Boolean(formik.errors.pass)}
               helperText={formik.touched.pass && formik.errors.pass}
             />
-
+             <div onClick={show} ref={showic} className='mt-[10%] mb-[10%]  w-[10%] *:absolute relative flex justify-center cursor-pointer items-center'>
+                <span style={{ display: 'none' }} className='justify-center items-center w-full'><VisibilityIcon /></span>
+                <span style={{ display: 'flex' }} className='justify-center items-center w-full'><VisibilityOffIcon /></span>
+              </div>
             <label htmlFor="city">City</label>
             <WhiteTextField
               id="city"

@@ -6,6 +6,7 @@ body {
   position: relative;
   height: 100%;
   cursor: pointer;
+  overflow-x: hidden;
 }
 .image-hover:hover {
   filter: brightness(70%); /* Decrease brightness on hover */
