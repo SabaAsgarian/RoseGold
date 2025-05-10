@@ -8,16 +8,15 @@ import  useStore  from './../../store' ;
 import Footer from './../footer'
 import CustomizedBreadcrumbs from './../bradcrumbs'
 import { Box, CircularProgress } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
+
 async function getData() {
-
-  const res = await fetch('https://rosegoldgallery-back.onrender.com/api/category/rings');
-
-  if (!res.ok) {
-      throw new Error('Failed to fetch data: ' + res.statusText); // Improved error message
-  }
+  const res = await fetch('https://rosegoldgallery-back.onrender.com/api/category/rings', {
+    next: { revalidate: 60 } // Next.js ISR
+  });
+  if (!res.ok) throw new Error('Failed to fetch data: ' + res.statusText);
   return res.json();
 }
-
 const RingsPage = () => {
   const [data, setData] = useState([]); // State to hold fetched data
   const [loading, setLoading] = useState(true); // State to manage loading
@@ -80,10 +79,18 @@ const RingsPage = () => {
         margin: '5% auto'
       }}>
         {loading ? (
-          <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-          <p>Loading products...</p>
-          <CircularProgress color="inherit" />
-        </Box>
+           Array.from(new Array(12)).map((_, index) => (
+            <div key={index} style={{ margin: '30px', border: '1px solid grey', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <Skeleton variant="rectangular" width={300} height={300}  />
+         
+              <Box sx={{ width: 290,backgroundColor: 'white',height : 100 }}>
+                <Skeleton />
+                <Skeleton animation="wave" />
+                <Skeleton animation={false} />
+              </Box>
+              <Skeleton variant="rectangular" width={290} height={40} sx={{ borderRadius: '10px', marginBottom: '10px' }} />
+            </div>
+          ))
         ) : error ? (
           <p>Error: {error}</p>
         ) : data.length > 0 ? (
@@ -91,6 +98,10 @@ const RingsPage = () => {
             <div key={item.id} style={{
               flex: windowWidth < 600 ? '1 0 100%' : windowWidth < 1024 ? '1 0 50%' : '1 0 33.33%',
               marginBottom: '5%',
+              padding: '10px' ,
+              display:'flex',
+              justifyContent:'center',
+              alignItems:'center'
             }}>
               <MultiActionAreaCard data={item} />
             </div>

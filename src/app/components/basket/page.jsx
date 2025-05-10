@@ -200,7 +200,7 @@ export default function CartPage() {
             ))}
           </TableBody>
         </Table>
-        <h3 style={{ textAlign: 'start', marginTop: '5%',marginBottom:'5%' ,fontSize:'20px',fontWeight:'bold'}}>- Total Price Of Your Shopping Is: {num}$</h3>
+        <h3 style={{ textAlign: 'start', marginTop: '2%',marginBottom:'2%' ,fontSize:'20px',fontWeight:'bold'}}>- Total Price Of Your Shopping Is: {num}$</h3>
 
         {orderSuccess ? (
           <h3 style={{ color: "green", textAlign: "center" }}>

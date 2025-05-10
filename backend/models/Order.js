@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "processing", "completed", "cancelled"],
+      enum: ["pending","shipped","delivered", "processing", "completed", "cancelled"],
       default: "pending"
     },
     shippingAddress: {
@@ -45,3 +45,4 @@ const orderSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Order", orderSchema);
+

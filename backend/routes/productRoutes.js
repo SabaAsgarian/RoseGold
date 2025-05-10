@@ -71,5 +71,33 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: 'خطا در حذف محصول', error: err });
     }
 });
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.json(products);
+    } catch (err) {
+        res.status(500).json({ message: 'خطا در دریافت محصولات', error: err });
+    }
+});
+// ویرایش محصول
+router.put('/:id', upload.single('img'), async (req, res) => {
+    try {
+        const updateFields = req.body;
+        if (req.file) {
+            updateFields.img = req.file.path;
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            updateFields,
+            { new: true }
+        );
+
+        res.json({ message: 'محصول با موفقیت ویرایش شد', product: updatedProduct });
+    } catch (err) {
+        res.status(500).json({ message: 'خطا در ویرایش محصول', error: err });
+    }
+});
+
 
 export default router;

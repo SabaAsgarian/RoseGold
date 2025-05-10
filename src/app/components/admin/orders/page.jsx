@@ -174,7 +174,7 @@ export default function Orders() {
 
                               <TableCell>${order.totalAmount}</TableCell>
                               <TableCell>
-                                {order.shippingAddress ? `${order.shippingAddress.city}, ${order.shippingAddress.street}` : "Address not available"}
+                                {order.userId ? `${order.userId.city}, ${order.userId.street}` : "Address not available"}
                               </TableCell>
 
                               <TableCell>{order.status}</TableCell>

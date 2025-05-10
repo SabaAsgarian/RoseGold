@@ -574,7 +574,7 @@ export default function Page() {
           <Typography variant="body1">Forever Warranty</Typography> {/* Text */}
         </Box>
       </Box>
-      {/* jhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh */}
+      {/* last */}
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '5%', marginLeft: '3%' }}>
         <Box sx={{ fontWeight: 'bold', color: 'black', marginBottom: "5%", fontSize: '25px' }}>
           Our Branches

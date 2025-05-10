@@ -14,7 +14,7 @@ router.get("/all", authMiddleware, async (req, res) => {
   try {
     // Fetch orders and populate userId fields along with shippingAddress
     const orders = await Order.find()
-      .populate("userId", "fname lname email") // Include user info
+      .populate("userId", "fname lname email street city") // Include user info
       .exec(); // Ensure the query executes correctly
 
     console.log("Orders fetched: ", orders); // Debugging output
@@ -31,7 +31,7 @@ router.get("/all", authMiddleware, async (req, res) => {
 // **📌 دریافت یک سفارش خاص**
 router.get("/:id", authMiddleware, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate("userId", "fname lname email");
+    const order = await Order.findById(req.params.id).populate("userId", "fname lname email street city");
     if (!order) {
       return res.status(404).json({ error: "سفارش یافت نشد" });
     }
@@ -113,24 +113,88 @@ router.put("/:id", authMiddleware, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).json({ error: "❌ دسترسی غیرمجاز" });
 
   try {
+    const updateData = {};
+    
+    // Add status if provided
+    if (req.body.status) {
+      updateData.status = req.body.status;
+    }
+    
+    // Add shipping address if provided
+    if (req.body.shippingAddress) {
+      // Validate shipping address
+      if (!req.body.shippingAddress.city || !req.body.shippingAddress.street) {
+        return res.status(400).json({ error: "آدرس حمل و نقل نامعتبر است" });
+      }
+      
+      updateData.shippingAddress = {
+        city: req.body.shippingAddress.city.trim(),
+        street: req.body.shippingAddress.street.trim()
+      };
+    }
+
+    // Validate if there's anything to update
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ error: "هیچ داده‌ای برای بروزرسانی ارسال نشده است" });
+    }
+
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id, 
-      { status: req.body.status }, 
-      { new: true }
-    ).populate("userId", "fname lname email");
+      { $set: updateData }, // Use $set operator to ensure proper update
+      { new: true, runValidators: true } // Enable validation
+    ).populate("userId", "fname lname email street city");
 
     if (!updatedOrder) {
       return res.status(404).json({ error: "سفارش یافت نشد" });
     }
 
     res.json({ 
-      message: "✅ وضعیت سفارش بروزرسانی شد", 
+      success: true,
+      message: "✅ سفارش بروزرسانی شد", 
       order: updatedOrder 
     });
   } catch (error) {
     console.error('Error updating order:', error);
     res.status(500).json({ 
       error: "❌ خطا در بروزرسانی سفارش",
+      details: error.message 
+    });
+  }
+});
+
+// **📌 به‌روزرسانی آدرس در تمام سفارش‌های کاربر**
+router.put("/update-address/all", authMiddleware, async (req, res) => {
+  try {
+    const { shippingAddress } = req.body;
+    const userId = req.user.id;
+
+    // Validate shipping address
+    if (!shippingAddress || !shippingAddress.city || !shippingAddress.street) {
+      return res.status(400).json({ error: "آدرس حمل و نقل نامعتبر است" });
+    }
+
+    // Update all orders for the user
+    const result = await Order.updateMany(
+      { userId },
+      { 
+        $set: { 
+          shippingAddress: {
+            city: shippingAddress.city.trim(),
+            street: shippingAddress.street.trim()
+          }
+        }
+      }
+    );
+
+    res.json({ 
+      success: true,
+      message: "✅ آدرس در تمام سفارش‌ها به‌روزرسانی شد",
+      updatedCount: result.modifiedCount
+    });
+  } catch (error) {
+    console.error('Error updating shipping addresses:', error);
+    res.status(500).json({ 
+      error: "❌ خطا در به‌روزرسانی آدرس‌ها",
       details: error.message 
     });
   }

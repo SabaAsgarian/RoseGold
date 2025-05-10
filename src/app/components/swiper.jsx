@@ -16,7 +16,7 @@ import j from './img/10.jpg'
 import k from './img/11.jpg'
 import l from './img/12.jpg'
 import m from './img/13.jpg'
-import n from './img/14.jpg'
+
 import Link from 'next/link';
 import Image from "next/image";
 import '../globals.css';
@@ -159,7 +159,7 @@ function Responsive() {
     { img: k, link: "./components/earings" },
     { img: l, link: "./components/necklace" },
     { img: m, link: "./components/bracelet" },
-    { img: n, link: "./components/bracelet" }
+  
   ];
 
   return (

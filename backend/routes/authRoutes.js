@@ -59,6 +59,7 @@ router.post("/login", async (req, res) => {
             age: user.age,
             city: user.city,
             street: user.street,
+            img:user.img,
           },
         });
     } catch (error) {
@@ -127,6 +128,7 @@ router.get("/user/:id", async (req, res) => {
       age: user.age,
       city: user.city,
       street: user.street,
+      img:user.img,
     });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch user details" });

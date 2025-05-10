@@ -87,6 +87,7 @@ export default function AccountPage() {
 
   const formik = useFormik({
     initialValues: {
+      img:'',
       fname: '',
       lname: '',
       email: '',
@@ -159,6 +160,7 @@ export default function AccountPage() {
   const handleEdit = () => {
     // Ensure we have the latest user data when entering edit mode
     formik.setValues({
+      img:user.img || '',
       fname: user.fname || '',
       lname: user.lname || '',
       email: user.email || '',
@@ -311,8 +313,8 @@ export default function AccountPage() {
               sx={{
                 border:'1px solid black',
                 borderRadius:'50%',
-                width: 120,
-                height: 120,
+                width: 80,
+                height: 80,
                 margin: '0 auto',
                 mb: 2,
                 bgcolor: user.img ? 'transparent' : '#1976d2',

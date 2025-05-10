@@ -46,6 +46,7 @@ const StyledButton = styled(Button)({
   color: "white",
   "&:hover": {
     backgroundColor: "#3e3e3e",
+    color: "white",
   },
 });
 
@@ -360,6 +361,7 @@ export default function UserRegister() {
             <StyledButton 
               type="submit"
               disabled={formik.isSubmitting}
+
             >
               {formik.isSubmitting ? "Registering..." : "Register"}
             </StyledButton>

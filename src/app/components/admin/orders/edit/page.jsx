@@ -136,10 +136,12 @@ export default function EditOrder() {
                 onChange={(e) => setStatus(e.target.value)}
                 fullWidth
               >
-                <MenuItem value="pending">در انتظار</MenuItem>
-                <MenuItem value="processing">در حال پردازش</MenuItem>
-                <MenuItem value="completed">تکمیل شده</MenuItem>
-                <MenuItem value="cancelled">لغو شده</MenuItem>
+                <MenuItem value="pending"> pending </MenuItem>
+                <MenuItem value="processing"> processing </MenuItem>
+                <MenuItem value="shipped">shipped </MenuItem>
+                <MenuItem value="delivered">delivered  </MenuItem>
+                <MenuItem value="completed">completed  </MenuItem>
+                <MenuItem value="cancelled"> cancelled</MenuItem>
               </TextField>
             </Grid>
 
@@ -194,7 +196,7 @@ export default function EditOrder() {
 
             {/* Submit Button */}
             <Grid item xs={12}>
-              <Button sx={{color:'black'}} variant="contained" color="primary" fullWidth onClick={handleUpdate}>
+              <Button sx={{ color: 'black' }} variant="contained" color="primary" fullWidth onClick={handleUpdate}>
                 بروزرسانی سفارش
               </Button>
             </Grid>

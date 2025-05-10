@@ -27,7 +27,9 @@ const whitelist = [
   'https://rose-gold-xi.vercel.app',
   'https://rose-gold-sabas-projects-edc52f08.vercel.app',
   'https://rose-gold-git-main-sabas-projects-edc52f08.vercel.app',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'https://rose-gold-galery.vercel.app',
+'rose-gold-gal.vercel.app'
 ];
 
 const corsOptions = {
@@ -210,3 +212,4 @@ app.listen(port, () => {
 });
 
 export default app;
+

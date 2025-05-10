@@ -24,16 +24,16 @@ export default function MultiActionAreaCard({ data }) { // Accept data as a prop
         <myContext.Provider value={data} key={'post' + data._id}>
 
 
-            <Card sx={{ maxWidth: 350, border: '1px solid black' }}>
+            <Card sx={{minWidth: 300, maxWidth: 350, border: '1px solid black',}}>
                 <CardActionArea>
                     <div style={{ backgroundColor: '#faf7f1' ,mixBlendMode:'multiply'}} className='firstt'> {/* Added div for background color */}
                         <CardMedia
                             component="img"
-                           
                             image={`https://rosegoldgallery-back.onrender.com/${data.img}`}
                             alt={data.category}
                             style={{backgroundColor: '#faf7f1' ,mixBlendMode:'multiply',height:'300px'}}
                             className='secondd'
+                            loading="lazy"
                         />
                     </div>
                     <CardContent>
