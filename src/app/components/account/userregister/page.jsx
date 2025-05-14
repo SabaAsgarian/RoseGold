@@ -361,6 +361,7 @@ export default function UserRegister() {
             <StyledButton 
               type="submit"
               disabled={formik.isSubmitting}
+              
 
             >
               {formik.isSubmitting ? "Registering..." : "Register"}

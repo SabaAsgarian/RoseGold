@@ -14,10 +14,22 @@ import {
   CircularProgress,
   IconButton,
   Grid,
-  Box
+  Box,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import Header from "../adminUI/Drawer";
+
+// Check if token is expired
+const isTokenExpired = (token) => {
+  try {
+    const [, payload] = token.split('.');
+    const decoded = JSON.parse(atob(payload));
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp < now;
+  } catch (e) {
+    return true;
+  }
+};
 
 export default function Orders() {
   const router = useRouter();
@@ -26,7 +38,11 @@ export default function Orders() {
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
-    if (!userData) {
+    const token = localStorage.getItem('token');
+
+    if (!userData || !token || isTokenExpired(token)) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
       router.push('/components/admin/login');
       return;
     }
@@ -34,12 +50,12 @@ export default function Orders() {
     try {
       const user = JSON.parse(userData);
       if (user.role !== "admin") {
-        console.log('User is not admin:', user.role);
         router.push('/');
         return;
       }
     } catch (error) {
-      console.error('Error parsing user data:', error);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
       router.push('/components/admin/login');
       return;
     }
@@ -50,7 +66,9 @@ export default function Orders() {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
+      if (!token || isTokenExpired(token)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         router.push('/components/admin/login');
         return;
       }
@@ -70,26 +88,27 @@ export default function Orders() {
           router.push('/components/admin/login');
           return;
         }
-        throw new Error("خطا در دریافت سفارشات");
+        throw new Error("Error Fetching Orders!!!");
       }
 
       const data = await response.json();
-      console.log("Fetched orders:", data);
       setOrders(data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching orders:', error);
-      alert('خطا در دریافت سفارشات. لطفا دوباره تلاش کنید.');
+      alert('Error Fetching Orders Please Try Again!!');
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("آیا از حذف سفارش مطمئن هستید؟")) return;
+    if (!confirm("  Are You Sure You Want to delete This Order???   ")) return;
 
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
+      if (!token || isTokenExpired(token)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         router.push('/components/admin/login');
         return;
       }
@@ -109,34 +128,33 @@ export default function Orders() {
           router.push('/components/admin/login');
           return;
         }
-        throw new Error("خطا در حذف سفارش");
+        throw new Error("Error In Deleting This Order!!   ");
       }
 
       setOrders(orders.filter((order) => order._id !== id));
     } catch (error) {
       console.error('Error deleting order:', error);
-      alert('خطا در حذف سفارش. لطفا دوباره تلاش کنید.');
+      alert(' Error In Deleting This Order!! Please Try Again!!!');
     }
   };
 
+  if (loading) {
+    return (
+      <Header>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+          <CircularProgress />
+        </Box>
+      </Header>
+    );
+  }
 
-
-  
   return (
     <div>
-
       <Header>
-        <Box sx={{
-          maxWidth: '92vw',
-          overflowX: 'hidden'
-        }}>
+        <Box sx={{ maxWidth: '92vw', overflowX: 'hidden' }}>
           <Grid container>
             <Grid item xs={12}>
-              <Box sx={{
-                width: { xs: '100%', sm: '100%' },
-                mx: 'auto',
-                px: { xs: 1, sm: 2, md: 3 },
-              }}>
+              <Box sx={{ width: '100%', mx: 'auto', px: { xs: 1, sm: 2, md: 3 } }}>
                 <Container maxWidth="lg" sx={{ py: 4 }}>
                   <Paper sx={{ p: 3 }}>
                     <Typography variant="h5" gutterBottom>
@@ -162,7 +180,7 @@ export default function Orders() {
                             <TableRow key={order._id}>
                               <TableCell>{order.trackingCode}</TableCell>
                               <TableCell>
-                                {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'نامشخص'}
+                                {order.userId ? `${order.userId.fname} ${order.userId.lname}` : 'Unknown'}
                               </TableCell>
                               <TableCell>
                                 {order.items.map((item) => (
@@ -171,12 +189,10 @@ export default function Orders() {
                                   </div>
                                 ))}
                               </TableCell>
-
                               <TableCell>${order.totalAmount}</TableCell>
                               <TableCell>
                                 {order.userId ? `${order.userId.city}, ${order.userId.street}` : "Address not available"}
                               </TableCell>
-
                               <TableCell>{order.status}</TableCell>
                               <TableCell>{new Date(order.createdAt).toLocaleString()}</TableCell>
                               <TableCell>
@@ -194,12 +210,11 @@ export default function Orders() {
                     </TableContainer>
                   </Paper>
                 </Container>
-                </Box>
+              </Box>
             </Grid>
           </Grid>
         </Box>
-     
-    </Header>
-    </div >
+      </Header>
+    </div>
   );
 }

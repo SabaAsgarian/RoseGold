@@ -239,8 +239,8 @@ export default function AdminRegister() {
                                 />
                             </div>
 
-                            <Box sx={{ marginTop: '10%' }}>
-                                <StyledButton type="submit">Submit</StyledButton>
+                            <Box sx={{ marginTop: '15%',width:'100%' }}>
+                                <StyledButton type="submit" sx={{width:'80%' }}>Submit</StyledButton>
                             </Box>
                             <Box sx={{ display: 'flex', marginTop: '10%', marginBottom: '10%' }}>
                                 <Typography>
