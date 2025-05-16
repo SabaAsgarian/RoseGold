@@ -14,8 +14,8 @@ import { Box } from '@mui/material';
 import myContext from '../myContext';
 import useStore from './../store';
 import '../globals.css';
-export default function Cardd({ data ,  onDelete}) {
-// export default function Cardd({ data }) {
+//export default function Cardd({ data ,  onDelete}) {
+export default function Cardd({ data }) {
     const temp = {
         id: data._id,
         img: data.img,
@@ -28,17 +28,17 @@ export default function Cardd({ data ,  onDelete}) {
     const { addProduct } = useStore();
     const router = useRouter();
 
-      const handleDelete = async () => {
-        const confirm = window.confirm('َAre you Sure You Want To Delete This Product؟');
-        if (confirm) {
-          const res = await fetch(`https://rosegoldgallery-back.onrender.com/api/products/${data._id}`, {
-            method: 'DELETE',
-          });
-          if (res.ok) {
-            onDelete(data._id);
-          }
-        }
-      };
+     //const handleDelete = async () => {
+        //const confirm = window.confirm('َAre you Sure You Want To Delete This Product؟');
+       // if (confirm) {
+        //const res = await fetch(`https://rosegoldgallery-back.onrender.com/api/products/${data._id}`, {
+            //method: 'DELETE',
+          //});
+          //if (res.ok) {
+            //onDelete(data._id);
+          //}
+        //}
+     // };
     return (
         <myContext.Provider value={data} key={'post' + data._id}>
             <Card sx={{ minWidth: 300, maxWidth: 350, border: '2px solid black' }}>
@@ -68,10 +68,10 @@ export default function Cardd({ data ,  onDelete}) {
                     </CardContent>
                     <CardActions sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                         <Button
-                            // onClick={() => {
-                            //     alert('⚠️ Are you sure? This feature is not functional yet. You can find the full code on my GitHub.');
-                            // }}
-                            onClick={handleDelete}
+                         onClick={() => {
+                               alert('⚠️ Are you sure? This feature is not functional yet. You can find the full code on my GitHub.');
+                            }}
+                            //onClick={handleDelete}
                             color="primary"
                             sx={{
                                 backgroundColor: 'black',
