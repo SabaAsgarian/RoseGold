@@ -2,9 +2,6 @@
 # RoseGoldGallery 
  
 
-
-
-
 - 📽[Demo Project](https://rose-gold-xi.vercel.app/)📽
 - 👩‍💻Developed by Saba Asgarian👩‍💻
 
