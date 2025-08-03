@@ -51,19 +51,5 @@
 ![Image](https://github.com/user-attachments/assets/6bf3ec91-a356-4850-a9da-e10d9c798773)
 
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your `.env.local` file:
-
-1. Copy `.env.example` to `.env.local`
-2. Fill in your actual values in `.env.local`
-
-Note: Never commit your actual `.env.local` file to version control. 
 
 
-
-
-
-=======
-# RosegoldgalleryB
->>>>>>> 39adf6bda9ca493ae82ef5e232f05692875a64a3
