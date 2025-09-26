@@ -27,6 +27,7 @@ export default function Page() {
     setShowVideo(true);
   };
 
+  
   return (
     <>
       <PrimarySearchAppBar />
