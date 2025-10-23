@@ -10,11 +10,11 @@
 
 - ✍Created - 2025-04-06✍
 
-- 💻Technologies Used - Html , Css , Nextjs, Materialui , React , Zustand , MongoDb , Express.js , Context Api , Functional Login/Sign Up , Functional Cart with Zustand , React Slick 💻
+- 💻Technologies Used - Html , Css , Nextjs, Material ui , React , Zustand , MongoDb , Express.js , Context Api , Functional Login/Sign Up , Functional Cart with Zustand , React Slick 💻
 
 - Hooks Used : useState 
 
-- Role - Frontend
+- Role - Frontend , Backend 
 - [Login Informatin For Rose Gold Gallery Website ](https://github.com/user-attachments/files/19922018/Login.txt)
 
 
